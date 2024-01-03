@@ -1,0 +1,104 @@
+[gd_scene load_steps=9 format=3 uid="uid://cntdcu23p2y41"]
+
+[ext_resource type="Script" path="res://Scenes/car.gd" id="1_4v7wr"]
+[ext_resource type="Texture2D" uid="uid://cnymqhaw0nvpt" path="res://Resources/Orange/texture_01.png" id="1_gonnh"]
+[ext_resource type="Script" path="res://Scripts/WheelScript.gd" id="3_akq1v"]
+[ext_resource type="Script" path="res://Scenes/CarCenterPivot.gd" id="4_nl1tc"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h4dbw"]
+albedo_texture = ExtResource("1_gonnh")
+uv1_triplanar = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_qymcg"]
+lightmap_size_hint = Vector2i(35, 41)
+material = SubResource("StandardMaterial3D_h4dbw")
+size = Vector3(1.8, 0.8, 4.5)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_rx2pd"]
+points = PackedVector3Array(0.9, 0.4, 2.25, 0.9, -0.4, 2.25, 0.9, 0.4, -2.25, -0.9, 0.4, 2.25, -0.9, -0.4, 2.25, 0.9, -0.4, -2.25, -0.9, 0.4, -2.25, -0.9, -0.4, -2.25)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_mj4na"]
+top_radius = 0.05
+bottom_radius = 0.05
+height = 1.0
+
+[node name="Supra" type="RigidBody3D"]
+mass = 1500.0
+script = ExtResource("1_4v7wr")
+
+[node name="Car Body" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+mesh = SubResource("BoxMesh_qymcg")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+shape = SubResource("ConvexPolygonShape3D_rx2pd")
+
+[node name="FRWheel" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.674009, -0.0620013, 1.66817)
+script = ExtResource("3_akq1v")
+spring_stiffness = 15000.0
+spring_travel = 0.3
+rest_lenght = 0.7
+damper_stiffness = 4000.0
+fr_wheel = true
+wheel_radius = 0.33
+tire_grip = 1.0
+tire_mass = 50.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="FRWheel"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -0.499369, 0)
+mesh = SubResource("CylinderMesh_mj4na")
+
+[node name="FLWheel" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.674009, -0.0620013, 1.66817)
+script = ExtResource("3_akq1v")
+spring_stiffness = 15000.0
+spring_travel = 0.3
+rest_lenght = 0.7
+damper_stiffness = 4000.0
+fl_wheel = true
+wheel_radius = 0.33
+tire_grip = 1.0
+tire_mass = 50.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="FLWheel"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -0.499369, 0)
+mesh = SubResource("CylinderMesh_mj4na")
+
+[node name="RRWheel" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.674009, -0.0620013, -1.69625)
+script = ExtResource("3_akq1v")
+spring_stiffness = 15000.0
+spring_travel = 0.3
+rest_lenght = 0.7
+damper_stiffness = 4000.0
+traction = true
+wheel_radius = 0.33
+tire_grip = 1.0
+tire_mass = 50.0
+
+[node name="RLWheel" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.674009, -0.0620013, -1.69625)
+script = ExtResource("3_akq1v")
+spring_stiffness = 15000.0
+spring_travel = 0.3
+rest_lenght = 0.7
+damper_stiffness = 4000.0
+traction = true
+wheel_radius = 0.33
+tire_grip = 1.0
+tire_mass = 50.0
+
+[node name="RearCamPos" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.984808, 0.173648, 0, -0.173648, 0.984808, 0, 2, 5)
+
+[node name="Display" type="Label3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -1.3, 0.295, -2)
+text = "display"
+
+[node name="CarCenterPivot" type="Node3D" parent="."]
+script = ExtResource("4_nl1tc")
+
+[node name="RearCam" type="Camera3D" parent="CarCenterPivot"]
+transform = Transform3D(-1, 1.51808e-08, -8.60946e-08, 0, 0.984808, 0.173648, 8.74228e-08, 0.173648, -0.984808, 0, 2, -5)
