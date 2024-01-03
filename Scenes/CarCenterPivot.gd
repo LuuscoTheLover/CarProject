@@ -9,6 +9,5 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	global_position = global_position.lerp(car.global_position, delta * 20.0)
-	global_transform = global_transform.interpolate_with(car.global_transform, delta * 5.0)
+	pass
 	

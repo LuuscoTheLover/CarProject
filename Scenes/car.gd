@@ -8,16 +8,9 @@ class_name Car
 
 
 
-@onready var display = $Display
 @onready var car = $"."
 
-var speed : float
-
 func _physics_process(delta):
-	display_info()
+	pass
 
-func display_info():
-	var z = car.global_basis.z
-	speed = z.dot(car.linear_velocity)
-	var speedkmh = int(speed * 3.6)
-	display.text = "%s KM/H" % [speedkmh]
+
