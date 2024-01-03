@@ -23,6 +23,7 @@ bottom_radius = 0.05
 height = 1.0
 
 [node name="Supra" type="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.32577, 0, 0)
 mass = 1500.0
 script = ExtResource("1_4v7wr")
 
