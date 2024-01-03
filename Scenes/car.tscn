@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=3 uid="uid://bg8td2smeb1so"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_qdm1j"]
+size = Vector3(1.8, 1.2, 4.5)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_h1uvy"]
+points = PackedVector3Array(0.9, 0.6, 2.25, 0.9, -0.6, 2.25, 0.9, 0.6, -2.25, -0.9, 0.6, 2.25, -0.9, -0.6, 2.25, 0.9, -0.6, -2.25, -0.9, 0.6, -2.25, -0.9, -0.6, -2.25)
+
+[node name="Car" type="RigidBody3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_qdm1j")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("ConvexPolygonShape3D_h1uvy")
+
+[node name="FRWheel" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8, 0, -1.5)
+
+[node name="FLWheel" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8, 0, -1.5)
+
+[node name="RRWheel" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8, 0, 1.8)
+
+[node name="RLWheel" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8, 0, 1.5)
