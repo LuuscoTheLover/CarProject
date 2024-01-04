@@ -1,0 +1,90 @@
+extends RayCast3D
+class_name WheelScript
+
+@export var debug : bool
+
+@export_category("Suspension")
+@export var rest_lenght : float
+@export var spring_stiff : float
+@export var damper_stiff : float
+
+@export_category("Wheel")
+@export var wheel_radius : float = 0.33
+@export var fr_wheel : bool
+@export var fl_wheel : bool
+@export var traction : bool
+
+@export_category("Tire")
+@export var tire_grip : float
+
+@onready var car = $".." as CarScript as RigidBody3D
+
+func _ready():
+	target_position.y = -(rest_lenght + wheel_radius)
+	add_exception(car)
+
+
+func _physics_process(delta):
+	var origin = global_position
+	var collision_point = get_collision_point()
+	var distance = origin.distance_to(collision_point)
+	var force_point = Vector3(collision_point.x, collision_point.y + wheel_radius, collision_point.z)
+	
+	suspension(distance, force_point)
+	acceleration(force_point)
+	z_force(force_point)
+	x_force(force_point, delta)
+	
+	if Input.is_action_pressed('x'):
+		car.apply_force(global_basis.x * car.engine_power, force_point - car.global_position)
+		
+		
+		
+		
+func x_force(force_point, delta):
+	var dir = global_basis.x
+	var world_tire_vel = get_point_velocity(global_position)
+	var vel = dir.dot(world_tire_vel)
+	var force = -vel * tire_grip
+	var x_force = force / delta
+	
+	car.apply_force(dir * x_force, force_point - car.global_position)
+	if car.debug:
+		DebugDraw3D.draw_arrow_line(global_position, global_position + (dir * ((x_force / 1000) / 10)), Color.RED, 0.1, true)
+	
+func z_force(force_point):
+	var dir = global_basis.z
+	var world_tire_vel = get_point_velocity(global_position)
+	var vel = dir.dot(world_tire_vel)
+	var z_force = (car.mass / car.drag) * vel
+	
+	car.apply_force(-dir * z_force, force_point - car.global_position)
+	if car.debug:
+		DebugDraw3D.draw_arrow_line(force_point, force_point + (-dir * ((z_force / 1000) / 10)), Color.BLUE_VIOLET, 0.1, true)
+		
+
+func acceleration(force_point):
+	if traction:
+		var accel_dir = -global_basis.z
+		var torque = car.accel_input * car.engine_power
+		car.apply_force(accel_dir * torque, force_point - car.global_position)
+		if car.debug:
+			DebugDraw3D.draw_arrow_line(force_point, force_point - (accel_dir * ((torque / 1000) / 10)), Color.BLUE, 0.1, true)
+
+func suspension(distance, force_point):
+	if is_colliding():
+		var susp_dir = global_basis.y
+		var offset = rest_lenght - distance
+		var world_tire_vel = get_point_velocity(global_position)
+		var vel = susp_dir.dot(world_tire_vel)
+		var suspension_force = (spring_stiff * offset) - (damper_stiff * vel)
+		car.apply_force(suspension_force * susp_dir, force_point - car.global_position)
+		
+		if debug:
+			if traction:
+				DebugDraw3D.draw_sphere(force_point, 0.1)
+			DebugDraw3D.draw_arrow_line(global_position, to_global(position + Vector3(-position.x, ((suspension_force / 1000) / 10), -position.z)), Color.GREEN, 0.1, true)
+			DebugDraw3D.draw_line_hit_offset(global_position, Vector3(global_position.x, global_position.y - distance, global_position.z), true, 1, 0.25, Color.RED, Color.RED)
+
+func get_point_velocity(point : Vector3) -> Vector3:
+	return car.linear_velocity + car.angular_velocity.cross(point - car.global_position)

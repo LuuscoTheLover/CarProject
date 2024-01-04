@@ -44,8 +44,8 @@ mesh = SubResource("PlaneMesh_3twdy")
 shape = SubResource("ConcavePolygonShape3D_gqg7y")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(-0.999994, 0, -0.00338593, 0, 1, 0, 0.00338593, 0, -0.999994, 0, 6.04137, -19.0302)
+transform = Transform3D(-0.305695, 0.379661, -0.87316, 0, 0.91706, 0.398749, 0.952129, 0.121896, -0.280341, -4.73, 3.241, -2.354)
 script = ExtResource("1_fenvs")
 
 [node name="Car" parent="." instance=ExtResource("2_j2icv")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.26825, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.05165, 0)
