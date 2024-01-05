@@ -14,6 +14,8 @@ class_name WheelScript
 @export var fl_wheel : bool
 @export var traction : bool
 
+var steer_angles : float
+
 @export_category("Tire")
 @export var tire_grip : float
 
@@ -34,37 +36,43 @@ func _physics_process(delta):
 	acceleration(force_point)
 	z_force(force_point)
 	x_force(force_point, delta)
+	steering()
 	
 	if Input.is_action_pressed('x'):
 		car.apply_force(global_basis.x * car.engine_power, force_point - car.global_position)
 		
 		
 		
-		
-func x_force(force_point, delta):
-	var dir = global_basis.x
-	var world_tire_vel = get_point_velocity(global_position)
-	var vel = dir.dot(world_tire_vel)
-	var force = -vel * tire_grip
-	var x_force = force / delta
+func steering():
+	rotation_degrees.y = steer_angles
 	
-	car.apply_force(dir * x_force, force_point - car.global_position)
-	if car.debug:
-		DebugDraw3D.draw_arrow_line(global_position, global_position + (dir * ((x_force / 1000) / 10)), Color.RED, 0.1, true)
+func x_force(force_point, delta):
+	if is_colliding():
+		var dir = global_basis.x
+		var world_tire_vel = get_point_velocity(global_position)
+		var vel = dir.dot(world_tire_vel)
+		var force = -vel * tire_grip
+		var xforce = force / delta
+		
+		print(world_tire_vel)
+		car.apply_force(dir * xforce, force_point - car.global_position)
+		if car.debug:
+			DebugDraw3D.draw_arrow_line(global_position, global_position + (dir * ((xforce / 1000) / 10)), Color.RED, 0.1, true)
 	
 func z_force(force_point):
-	var dir = global_basis.z
-	var world_tire_vel = get_point_velocity(global_position)
-	var vel = dir.dot(world_tire_vel)
-	var z_force = (car.mass / car.drag) * vel
+	if is_colliding():
+		var dir = global_basis.z
+		var world_tire_vel = get_point_velocity(global_position)
+		var vel = dir.dot(world_tire_vel)
+		var zforce = (car.mass / car.drag) * vel
 	
-	car.apply_force(-dir * z_force, force_point - car.global_position)
-	if car.debug:
-		DebugDraw3D.draw_arrow_line(force_point, force_point + (-dir * ((z_force / 1000) / 10)), Color.BLUE_VIOLET, 0.1, true)
+		car.apply_force(-dir * zforce, force_point - car.global_position)
+		if car.debug:
+			DebugDraw3D.draw_arrow_line(force_point, force_point + (-dir * ((zforce / 1000) / 10)), Color.BLUE_VIOLET, 0.1, true)
 		
 
 func acceleration(force_point):
-	if traction:
+	if traction and is_colliding():
 		var accel_dir = -global_basis.z
 		var torque = car.accel_input * car.engine_power
 		car.apply_force(accel_dir * torque, force_point - car.global_position)

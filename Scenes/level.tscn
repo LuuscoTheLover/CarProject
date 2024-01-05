@@ -28,12 +28,13 @@ data = PackedVector3Array(500, 0, 500, -500, 0, 500, 500, 0, -500, -500, 0, 500,
 
 [node name="Level" type="Node3D"]
 
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-4.37114e-08, -0.135716, 0.990748, 0, 0.990748, 0.135716, -1, 5.93232e-09, -4.3307e-08, 0, 0, 0)
+light_color = Color(1, 0.521569, 0.427451, 1)
+shadow_enabled = true
+
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_ay0pa")
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
-shadow_enabled = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("PlaneMesh_3twdy")
@@ -43,9 +44,10 @@ mesh = SubResource("PlaneMesh_3twdy")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_gqg7y")
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(-0.305695, 0.379661, -0.87316, 0, 0.91706, 0.398749, 0.952129, 0.121896, -0.280341, -4.73, 3.241, -2.354)
-script = ExtResource("1_fenvs")
-
 [node name="Car" parent="." instance=ExtResource("2_j2icv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.05165, 0)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-0.305695, 0.379661, -0.87316, 0, 0.91706, 0.398749, 0.952129, 0.121896, -0.280341, -4.73, 3.241, -2.354)
+current = true
+script = ExtResource("1_fenvs")

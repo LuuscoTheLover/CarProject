@@ -1,5 +1,7 @@
 #Copyright © 2022 Marc Nahr: https://github.com/MarcPhi/godot-free-look-camera
 extends Camera3D
+@export_category("Camera")
+@export var follow : bool
 
 @export_range(0, 10, 0.01) var sensitivity : float = 3
 @export_range(0, 1000, 0.1) var default_velocity : float = 5
@@ -13,7 +15,6 @@ extends Camera3D
 func _input(event):
 	if not current:
 		return
-		
 	if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 		if event is InputEventMouseMotion:
 			rotation.y -= event.relative.x / 1000 * sensitivity
@@ -30,6 +31,10 @@ func _input(event):
 				_velocity = clamp(_velocity / speed_scale, min_speed, max_speed)
 
 func _process(delta):
+	current = follow
+		
+	if Input.is_action_just_pressed("freecamera"):
+		follow = !follow
 	if not current:
 		return
 		
