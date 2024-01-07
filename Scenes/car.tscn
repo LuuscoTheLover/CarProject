@@ -1,11 +1,17 @@
-[gd_scene load_steps=9 format=3 uid="uid://bg8td2smeb1so"]
+[gd_scene load_steps=11 format=3 uid="uid://bg8td2smeb1so"]
 
 [ext_resource type="Script" path="res://Scripts/WheelScript.gd" id="1_mr76y"]
 [ext_resource type="Script" path="res://Scenes/car.gd" id="1_s7myl"]
+[ext_resource type="Texture2D" uid="uid://d2ol6qeffcxif" path="res://Resources/Orange/texture_01.png" id="2_pw7kr"]
 [ext_resource type="PackedScene" uid="uid://d0kgtryx0fhy2" path="res://Scenes/steer_component.tscn" id="3_q0vlu"]
 [ext_resource type="Script" path="res://Scenes/Camera.gd" id="4_n840w"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_whxkw"]
+albedo_texture = ExtResource("2_pw7kr")
+uv1_triplanar = true
+
 [sub_resource type="BoxMesh" id="BoxMesh_qdm1j"]
+material = SubResource("StandardMaterial3D_whxkw")
 size = Vector3(1.8, 1.2, 4.5)
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_mnwoa"]

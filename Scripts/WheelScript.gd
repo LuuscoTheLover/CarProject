@@ -68,7 +68,7 @@ func z_force(force_point):
 	
 		car.apply_force(-dir * zforce, force_point - car.global_position)
 		if car.debug:
-			DebugDraw3D.draw_arrow_line(force_point, force_point + (-dir * ((zforce / 1000) / 10)), Color.BLUE_VIOLET, 0.1, true)
+			DebugDraw3D.draw_arrow_line(force_point, force_point + (-dir * ((zforce / 1000) / 2)), Color.BLUE_VIOLET, 0.1, true)
 		
 
 func acceleration(force_point):
@@ -91,7 +91,7 @@ func suspension(distance, force_point):
 		if debug:
 			if traction:
 				DebugDraw3D.draw_sphere(force_point, 0.1)
-			DebugDraw3D.draw_arrow_line(global_position, to_global(position + Vector3(-position.x, ((suspension_force / 1000) / 10), -position.z)), Color.GREEN, 0.1, true)
+			DebugDraw3D.draw_arrow_line(global_position, to_global(position + Vector3(-position.x, ((suspension_force / 1000) / 1.5), -position.z)), Color.GREEN, 0.1, true)
 			DebugDraw3D.draw_line_hit_offset(global_position, Vector3(global_position.x, global_position.y - distance, global_position.z), true, 1, 0.25, Color.RED, Color.RED)
 
 func get_point_velocity(point : Vector3) -> Vector3:

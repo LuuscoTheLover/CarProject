@@ -1,6 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://v5h5fk4ks8u2"]
+[gd_scene load_steps=11 format=3 uid="uid://v5h5fk4ks8u2"]
 
+[ext_resource type="Texture2D" uid="uid://eftu4ww0xem2" path="res://Resources/Dark/texture_01.png" id="1_0n4qi"]
 [ext_resource type="Script" path="res://AssetLib/FreeLookCamera/free_look_camera.gd" id="1_fenvs"]
+[ext_resource type="Script" path="res://Scenes/level.gd" id="1_x40ig"]
 [ext_resource type="PackedScene" uid="uid://bg8td2smeb1so" path="res://Scenes/car.tscn" id="2_j2icv"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ktxbj"]
@@ -16,17 +18,19 @@ sky = SubResource("Sky_v6dst")
 tonemap_mode = 2
 glow_enabled = true
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_av7xd"]
-albedo_color = Color(0.286275, 0.286275, 0.286275, 1)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ucnq0"]
+albedo_texture = ExtResource("1_0n4qi")
+uv1_triplanar = true
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_3twdy"]
-material = SubResource("StandardMaterial3D_av7xd")
+material = SubResource("StandardMaterial3D_ucnq0")
 size = Vector2(1000, 1000)
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_gqg7y"]
 data = PackedVector3Array(500, 0, 500, -500, 0, 500, 500, 0, -500, -500, 0, 500, -500, 0, -500, 500, 0, -500)
 
 [node name="Level" type="Node3D"]
+script = ExtResource("1_x40ig")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-4.37114e-08, -0.135716, 0.990748, 0, 0.990748, 0.135716, -1, 5.93232e-09, -4.3307e-08, 0, 0, 0)
@@ -45,7 +49,7 @@ mesh = SubResource("PlaneMesh_3twdy")
 shape = SubResource("ConcavePolygonShape3D_gqg7y")
 
 [node name="Car" parent="." instance=ExtResource("2_j2icv")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.05165, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(-0.305695, 0.379661, -0.87316, 0, 0.91706, 0.398749, 0.952129, 0.121896, -0.280341, -4.73, 3.241, -2.354)
