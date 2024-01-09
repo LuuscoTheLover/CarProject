@@ -1,18 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://bg8td2smeb1so"]
+[gd_scene load_steps=9 format=3 uid="uid://bg8td2smeb1so"]
 
 [ext_resource type="Script" path="res://Scripts/WheelScript.gd" id="1_mr76y"]
 [ext_resource type="Script" path="res://Scenes/car.gd" id="1_s7myl"]
-[ext_resource type="Texture2D" uid="uid://d2ol6qeffcxif" path="res://Resources/Orange/texture_01.png" id="2_pw7kr"]
+[ext_resource type="ArrayMesh" uid="uid://dhlnpige3ir2y" path="res://Blender/SupraModel.obj" id="2_0ihiu"]
 [ext_resource type="PackedScene" uid="uid://d0kgtryx0fhy2" path="res://Scenes/steer_component.tscn" id="3_q0vlu"]
 [ext_resource type="Script" path="res://Scenes/Camera.gd" id="4_n840w"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_whxkw"]
-albedo_texture = ExtResource("2_pw7kr")
-uv1_triplanar = true
-
-[sub_resource type="BoxMesh" id="BoxMesh_qdm1j"]
-material = SubResource("StandardMaterial3D_whxkw")
-size = Vector3(1.8, 1.2, 4.5)
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_mnwoa"]
 points = PackedVector3Array(-0.884127, -0.6, -2.15873, 0.849206, 0.6, 2.10794, 0.869841, -0.6, 2.15873, -0.884127, -0.6, 2.15873, 0.869841, -0.6, -2.15873, -0.863492, 0.6, -2.10794, -0.863492, 0.6, 2.10794, 0.849206, 0.6, -2.10794)
@@ -36,13 +28,14 @@ turn_radius = 10.8
 rear_track = 1.525
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("BoxMesh_qdm1j")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.47522, 1.37133)
+mesh = ExtResource("2_0ihiu")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("ConvexPolygonShape3D_mnwoa")
 
 [node name="FRWheel" type="RayCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8, -0.286997, -1.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8, -0.286997, -1.18521)
 script = ExtResource("1_mr76y")
 debug = true
 rest_lenght = 1.0
@@ -55,7 +48,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.530508, 0)
 mesh = SubResource("BoxMesh_akq26")
 
 [node name="FLWheel" type="RayCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8, -0.286997, -1.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8, -0.286997, -1.18521)
 script = ExtResource("1_mr76y")
 debug = true
 rest_lenght = 1.0
@@ -68,7 +61,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.530508, 0)
 mesh = SubResource("BoxMesh_akq26")
 
 [node name="RRWheel" type="RayCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8, -0.286997, 1.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8, -0.286997, 1.39389)
 script = ExtResource("1_mr76y")
 debug = true
 rest_lenght = 1.0
@@ -78,7 +71,7 @@ traction = true
 tire_grip = 40.0
 
 [node name="RLWheel" type="RayCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8, -0.286997, 1.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8, -0.286997, 1.39389)
 script = ExtResource("1_mr76y")
 debug = true
 rest_lenght = 1.0

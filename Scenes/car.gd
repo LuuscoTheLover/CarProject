@@ -20,4 +20,4 @@ var accel_input : float
 func _process(delta):
 	accel_input = Input.get_axis("reverse", "accelerate")
 	steer_component.steering_input = -Input.get_axis("left", "right")
-	print(int((linear_velocity.length()*3.6)))
+	#print(int((linear_velocity.length()*3.6)))

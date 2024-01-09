@@ -2,7 +2,7 @@ extends RayCast3D
 class_name WheelScript
 
 @export var debug : bool
-
+var i = 0
 @export_category("Suspension")
 @export var rest_lenght : float
 @export var spring_stiff : float
@@ -34,7 +34,7 @@ func _physics_process(delta):
 	
 	suspension(distance, force_point)
 	acceleration(force_point)
-	z_force(force_point)
+	z_force(force_point, delta)
 	x_force(force_point, delta)
 	steering()
 	
@@ -54,19 +54,25 @@ func x_force(force_point, delta):
 		var force = -vel * tire_grip
 		var xforce = force / delta
 		
-		print(world_tire_vel)
+		#print(world_tire_vel)
 		car.apply_force(dir * xforce, force_point - car.global_position)
 		if car.debug:
 			DebugDraw3D.draw_arrow_line(global_position, global_position + (dir * ((xforce / 1000) / 10)), Color.RED, 0.1, true)
 	
-func z_force(force_point):
+func z_force(force_point, delta):
 	if is_colliding():
 		var dir = global_basis.z
 		var world_tire_vel = get_point_velocity(global_position)
 		var vel = dir.dot(world_tire_vel)
 		var zforce = (car.mass / car.drag) * vel
-	
-		car.apply_force(-dir * zforce, force_point - car.global_position)
+		if car.linear_velocity.length() < 0.5 and not Input.is_action_pressed("accelerate") and not Input.is_action_pressed("reverse"):
+			car.linear_velocity = Vector3.ZERO
+			car.angular_velocity = Vector3.ZERO
+		elif car.linear_velocity.length() < 3.0 and not Input.is_action_pressed("accelerate") and not Input.is_action_pressed("reverse"):
+			car.linear_velocity = lerp(car.linear_velocity, Vector3.ZERO, delta * 1)
+			car.angular_velocity = lerp(car.angular_velocity, Vector3.ZERO, delta * 1)
+		else:
+			car.apply_force(-dir * zforce, force_point - car.global_position)
 		if car.debug:
 			DebugDraw3D.draw_arrow_line(force_point, force_point + (-dir * ((zforce / 1000) / 2)), Color.BLUE_VIOLET, 0.1, true)
 		
