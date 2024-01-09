@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scripts/WheelScript.gd" id="1_mr76y"]
 [ext_resource type="Script" path="res://Scenes/car.gd" id="1_s7myl"]
-[ext_resource type="PackedScene" uid="uid://bo6dokblk6pt5" path="res://Scenes/supra_model.tscn" id="2_e0s8a"]
+[ext_resource type="ArrayMesh" uid="uid://cgsfjnyvcpc6p" path="res://Resources/SupraModel_Plane.res" id="2_t66qg"]
 [ext_resource type="PackedScene" uid="uid://d0kgtryx0fhy2" path="res://Scenes/steer_component.tscn" id="3_q0vlu"]
 [ext_resource type="Script" path="res://Scenes/Camera.gd" id="4_n840w"]
 
@@ -27,8 +27,10 @@ wheel_base = 2.55
 turn_radius = 10.8
 rear_track = 1.525
 
-[node name="SupraModel2" parent="." instance=ExtResource("2_e0s8a")]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.47522, 1.37133)
+mesh = ExtResource("2_t66qg")
+skeleton = NodePath("")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("ConvexPolygonShape3D_mnwoa")
@@ -94,4 +96,3 @@ script = ExtResource("4_n840w")
 direction_offset = 1.5
 
 [node name="ReflectionProbe" type="ReflectionProbe" parent="."]
-update_mode = 1

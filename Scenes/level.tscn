@@ -6,8 +6,11 @@
 [ext_resource type="PackedScene" uid="uid://bg8td2smeb1so" path="res://Scenes/car.tscn" id="2_j2icv"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ktxbj"]
-sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
-ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+sky_top_color = Color(0.360784, 0.596078, 0.909804, 1)
+sky_horizon_color = Color(0.6, 0.647059, 0.717647, 1)
+ground_bottom_color = Color(0.258824, 0.396078, 0.4, 1)
+ground_horizon_color = Color(0.631373, 0.643137, 0.658824, 1)
+sun_angle_max = 61.11
 
 [sub_resource type="Sky" id="Sky_v6dst"]
 sky_material = SubResource("ProceduralSkyMaterial_ktxbj")
@@ -15,7 +18,10 @@ sky_material = SubResource("ProceduralSkyMaterial_ktxbj")
 [sub_resource type="Environment" id="Environment_ay0pa"]
 background_mode = 2
 sky = SubResource("Sky_v6dst")
+reflected_light_source = 2
 tonemap_mode = 2
+ssao_enabled = true
+sdfgi_enabled = true
 glow_enabled = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ucnq0"]
@@ -33,8 +39,8 @@ data = PackedVector3Array(500, 0, 500, -500, 0, 500, 500, 0, -500, -500, 0, 500,
 script = ExtResource("1_x40ig")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-4.37114e-08, -0.135716, 0.990748, 0, 0.990748, 0.135716, -1, 5.93232e-09, -4.3307e-08, 0, 0, 0)
-light_color = Color(1, 0.521569, 0.427451, 1)
+transform = Transform3D(-2.69631e-08, -0.863519, 0.504316, -3.44046e-08, 0.504316, 0.863519, -1, 5.93233e-09, -4.3307e-08, 1.67563, 7.42903, 0.512213)
+light_color = Color(0.847059, 0.929412, 0.905882, 1)
 shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
