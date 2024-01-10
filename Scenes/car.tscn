@@ -1,9 +1,9 @@
 [gd_scene load_steps=8 format=3 uid="uid://bg8td2smeb1so"]
 
 [ext_resource type="Script" path="res://Scripts/WheelScript.gd" id="1_mr76y"]
-[ext_resource type="Script" path="res://Scenes/car.gd" id="1_s7myl"]
+[ext_resource type="Script" path="res://Scripts/car.gd" id="1_s7myl"]
 [ext_resource type="PackedScene" uid="uid://d0kgtryx0fhy2" path="res://Scenes/steer_component.tscn" id="3_q0vlu"]
-[ext_resource type="Script" path="res://Scenes/Camera.gd" id="4_n840w"]
+[ext_resource type="Script" path="res://Scripts/Camera.gd" id="4_n840w"]
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_mnwoa"]
 points = PackedVector3Array(-0.884127, -0.6, -2.15873, 0.849206, 0.6, 2.10794, 0.869841, -0.6, 2.15873, -0.884127, -0.6, 2.15873, 0.869841, -0.6, -2.15873, -0.863492, 0.6, -2.10794, -0.863492, 0.6, 2.10794, 0.849206, 0.6, -2.10794)
