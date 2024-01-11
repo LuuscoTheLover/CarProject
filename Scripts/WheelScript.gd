@@ -36,7 +36,7 @@ func _physics_process(delta):
 	
 	
 	
-	suspension(distance, force_point)
+	suspension(distance, force_point, delta)
 	acceleration(force_point)
 	z_force(force_point, delta)
 	x_force(force_point, delta)
@@ -69,10 +69,11 @@ func z_force(force_point, delta):
 		var world_tire_vel = get_point_velocity(global_position)
 		var vel = dir.dot(world_tire_vel)
 		var zforce = (car.mass / car.drag) * vel
-		if car.linear_velocity.length() < 0.5 and not Input.is_action_pressed("accelerate") and not Input.is_action_pressed("reverse"):
+		
+		if car.speedkmh < 3 and not Input.is_action_pressed("accelerate") and not Input.is_action_pressed("reverse"):
 			car.linear_velocity = Vector3.ZERO
 			car.angular_velocity = Vector3.ZERO
-		elif car.linear_velocity.length() < 3.0 and not Input.is_action_pressed("accelerate") and not Input.is_action_pressed("reverse"):
+		elif car.speedkmh < 5 and not Input.is_action_pressed("accelerate") and not Input.is_action_pressed("reverse"):
 			car.linear_velocity = lerp(car.linear_velocity, Vector3.ZERO, delta * 1)
 			car.angular_velocity = lerp(car.angular_velocity, Vector3.ZERO, delta * 1)
 		else:
@@ -89,7 +90,7 @@ func acceleration(force_point):
 		if car.debug:
 			DebugDraw3D.draw_arrow_line(force_point, force_point - (accel_dir * ((torque / 1000) / 10)), Color.BLUE, 0.1, true)
 
-func suspension(distance, force_point):
+func suspension(distance, force_point,delta):
 	if is_colliding():
 		var susp_dir = global_basis.y
 		var offset = rest_lenght - distance
@@ -98,13 +99,21 @@ func suspension(distance, force_point):
 		var suspension_force = (spring_stiff * offset) - (damper_stiff * vel)
 		car.apply_force(suspension_force * susp_dir, force_point - car.global_position)
 		
-		wheel.position.y = position.y -(tire_len) -(-offset)
-		#print("a")
+		#wheel.position.y = position.y -(tire_len) -(-offset)
+		if offset > tire_len:
+			wheel.position.y = position.y -(tire_len)
+		elif traction:
+			wheel.position.y = lerp(wheel.position.y, (position.y -(tire_len) -(-offset)), delta )
+		else:
+			wheel.position.y = (position.y -(tire_len) -(-offset))
+		print(offset)
 		if debug:
 			if traction:
 				DebugDraw3D.draw_sphere(force_point, 0.1)
 			DebugDraw3D.draw_arrow_line(global_position, to_global(position + Vector3(-position.x, ((suspension_force / 1000) / 1.5), -position.z)), Color.GREEN, 0.1, true)
 			DebugDraw3D.draw_line_hit_offset(global_position, Vector3(global_position.x, global_position.y - distance, global_position.z), true, 1, 0.25, Color.RED, Color.RED)
-
+	else:
+			wheel.position.y = position.y -(tire_len)
+		
 func get_point_velocity(point : Vector3) -> Vector3:
 	return car.linear_velocity + car.angular_velocity.cross(point - car.global_position)

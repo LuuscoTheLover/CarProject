@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bg8td2smeb1so"]
+[gd_scene load_steps=11 format=3 uid="uid://bg8td2smeb1so"]
 
 [ext_resource type="Script" path="res://Scripts/WheelScript.gd" id="1_mr76y"]
 [ext_resource type="Script" path="res://Scripts/car.gd" id="1_s7myl"]
@@ -6,9 +6,11 @@
 [ext_resource type="PackedScene" uid="uid://d0kgtryx0fhy2" path="res://Scenes/steer_component.tscn" id="3_q0vlu"]
 [ext_resource type="PackedScene" uid="uid://lej6gcgecfpb" path="res://Resources/Cars models/Supra/wheel.tscn" id="4_ekysg"]
 [ext_resource type="Script" path="res://Scripts/Camera.gd" id="4_n840w"]
+[ext_resource type="Script" path="res://Scripts/Speedometer.gd" id="7_8qj70"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_c1elx"]
-size = Vector3(1.94861, 1.14209, 4.58167)
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_v7oon"]
+radius = 0.55
+height = 4.552
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l76pw"]
 albedo_color = Color(0.52549, 0.145098, 0, 1)
@@ -20,7 +22,7 @@ size = Vector3(0.1, 0.1, 1)
 [node name="Car" type="RigidBody3D"]
 mass = 1500.0
 center_of_mass_mode = 1
-center_of_mass = Vector3(0, -1, 0)
+center_of_mass = Vector3(0, -0.8, 0)
 script = ExtResource("1_s7myl")
 debug = true
 engine_power = 15000.0
@@ -32,16 +34,16 @@ rear_track = 1.525
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, -1.65962, 1.33829)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00518799, -0.234481, 0.114319)
-shape = SubResource("BoxShape3D_c1elx")
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.00518799, -0.196829, 0.114319)
+shape = SubResource("CapsuleShape3D_v7oon")
 
 [node name="FRWheel" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8, -0.25, -1.2)
 script = ExtResource("1_mr76y")
 debug = true
 rest_lenght = 0.8
-spring_stiff = 60000.0
-damper_stiff = 4000.0
+spring_stiff = 80000.0
+damper_stiff = 7000.0
 tire_grip = 40.0
 tire_len = 0.2
 
@@ -54,12 +56,12 @@ visible = false
 mesh = SubResource("BoxMesh_akq26")
 
 [node name="FLWheel" type="RayCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8, -0.269379, -1.2)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8, -0.25, -1.2)
 script = ExtResource("1_mr76y")
 debug = true
 rest_lenght = 0.8
-spring_stiff = 60000.0
-damper_stiff = 4000.0
+spring_stiff = 80000.0
+damper_stiff = 7000.0
 tire_grip = 40.0
 tire_len = 0.2
 
@@ -262,3 +264,8 @@ light_size = 0.1
 light_specular = 10.0
 omni_range = 0.2
 omni_attenuation = 1.8025
+
+[node name="Speedometer" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.40042, 0, 2.09465)
+text = "Speed"
+script = ExtResource("7_8qj70")

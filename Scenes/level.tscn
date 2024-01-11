@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://v5h5fk4ks8u2"]
+[gd_scene load_steps=16 format=3 uid="uid://v5h5fk4ks8u2"]
 
 [ext_resource type="Texture2D" uid="uid://eftu4ww0xem2" path="res://Resources/Prototype Textures/Dark/texture_01.png" id="1_0n4qi"]
 [ext_resource type="Script" path="res://AssetLib/FreeLookCamera/free_look_camera.gd" id="1_fenvs"]
@@ -31,6 +31,22 @@ size = Vector2(1000, 1000)
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_gqg7y"]
 data = PackedVector3Array(500, 0, 500, -500, 0, 500, 500, 0, -500, -500, 0, 500, -500, 0, -500, 500, 0, -500)
 
+[sub_resource type="PrismMesh" id="PrismMesh_2bdpu"]
+size = Vector3(40, 5, 10)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_go6o5"]
+data = PackedVector3Array(0, 2.5, 5, 20, -2.5, 5, -20, -2.5, 5, 0, 2.5, -5, -20, -2.5, -5, 20, -2.5, -5, 0, 2.5, 5, 0, 2.5, -5, 20, -2.5, 5, 0, 2.5, -5, 20, -2.5, -5, 20, -2.5, 5, 0, 2.5, -5, 0, 2.5, 5, -20, -2.5, -5, 0, 2.5, 5, -20, -2.5, 5, -20, -2.5, -5, -20, -2.5, 5, 20, -2.5, 5, -20, -2.5, -5, 20, -2.5, 5, 20, -2.5, -5, -20, -2.5, -5)
+
+[sub_resource type="PrismMesh" id="PrismMesh_2y5qb"]
+left_to_right = 1.0
+size = Vector3(10, 6, 10)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_gb7xl"]
+data = PackedVector3Array(5, 3, 5, 5, -3, 5, -5, -3, 5, 5, 3, -5, -5, -3, -5, 5, -3, -5, 5, 3, 5, 5, 3, -5, 5, -3, 5, 5, 3, -5, 5, -3, -5, 5, -3, 5, 5, 3, -5, 5, 3, 5, -5, -3, -5, 5, 3, 5, -5, -3, 5, -5, -3, -5, -5, -3, 5, 5, -3, 5, -5, -3, -5, 5, -3, 5, 5, -3, -5, -5, -3, -5)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_g1myl"]
+data = PackedVector3Array(5, 3, 5, 5, -3, 5, -5, -3, 5, 5, 3, -5, -5, -3, -5, 5, -3, -5, 5, 3, 5, 5, 3, -5, 5, -3, 5, 5, 3, -5, 5, -3, -5, 5, -3, 5, 5, 3, -5, 5, 3, 5, -5, -3, -5, 5, 3, 5, -5, -3, 5, -5, -3, -5, -5, -3, 5, 5, -3, 5, -5, -3, -5, 5, -3, 5, 5, -3, -5, -5, -3, -5)
+
 [node name="Level" type="Node3D"]
 script = ExtResource("1_x40ig")
 
@@ -57,3 +73,30 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
 transform = Transform3D(-0.305695, 0.379661, -0.87316, 0, 0.91706, 0.398749, 0.952129, 0.121896, -0.280341, -4.73, 3.241, -2.354)
 current = true
 script = ExtResource("1_fenvs")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4571, -32.7306)
+mesh = SubResource("PrismMesh_2bdpu")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D2/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_go6o5")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.6016, 3.03873, 0)
+mesh = SubResource("PrismMesh_2y5qb")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D3"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D3/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_gb7xl")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 113.034, 3.03873, 0.405309)
+mesh = SubResource("PrismMesh_2y5qb")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D4"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D4/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_g1myl")
