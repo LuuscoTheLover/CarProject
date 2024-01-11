@@ -1,12 +1,14 @@
-[gd_scene load_steps=8 format=3 uid="uid://bg8td2smeb1so"]
+[gd_scene load_steps=10 format=3 uid="uid://bg8td2smeb1so"]
 
 [ext_resource type="Script" path="res://Scripts/WheelScript.gd" id="1_mr76y"]
 [ext_resource type="Script" path="res://Scripts/car.gd" id="1_s7myl"]
+[ext_resource type="PackedScene" uid="uid://tgae71blhas0" path="res://Resources/Cars models/Supra/supra_model.tscn" id="2_l0pxb"]
 [ext_resource type="PackedScene" uid="uid://d0kgtryx0fhy2" path="res://Scenes/steer_component.tscn" id="3_q0vlu"]
+[ext_resource type="PackedScene" uid="uid://lej6gcgecfpb" path="res://Resources/Cars models/Supra/wheel.tscn" id="4_ekysg"]
 [ext_resource type="Script" path="res://Scripts/Camera.gd" id="4_n840w"]
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_mnwoa"]
-points = PackedVector3Array(-0.884127, -0.6, -2.15873, 0.849206, 0.6, 2.10794, 0.869841, -0.6, 2.15873, -0.884127, -0.6, 2.15873, 0.869841, -0.6, -2.15873, -0.863492, 0.6, -2.10794, -0.863492, 0.6, 2.10794, 0.849206, 0.6, -2.10794)
+[sub_resource type="BoxShape3D" id="BoxShape3D_c1elx"]
+size = Vector3(1.94861, 1.14209, 4.58167)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l76pw"]
 albedo_color = Color(0.52549, 0.145098, 0, 1)
@@ -26,54 +28,76 @@ wheel_base = 2.55
 turn_radius = 10.8
 rear_track = 1.525
 
+[node name="SupraModel" parent="." instance=ExtResource("2_l0pxb")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, -1.65962, 1.33829)
+
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("ConvexPolygonShape3D_mnwoa")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00518799, -0.234481, 0.114319)
+shape = SubResource("BoxShape3D_c1elx")
 
 [node name="FRWheel" type="RayCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8, -0.286997, -1.18521)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8, -0.25, -1.2)
 script = ExtResource("1_mr76y")
 debug = true
-rest_lenght = 1.0
-spring_stiff = 20000.0
+rest_lenght = 0.8
+spring_stiff = 60000.0
 damper_stiff = 4000.0
 tire_grip = 40.0
+tire_len = 0.2
+
+[node name="Wheel" parent="FRWheel" instance=ExtResource("4_ekysg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.764398, -0.360134, -1.04743)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="FRWheel"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.530508, 0)
+visible = false
 mesh = SubResource("BoxMesh_akq26")
 
 [node name="FLWheel" type="RayCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8, -0.286997, -1.18521)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8, -0.25, -1.2)
 script = ExtResource("1_mr76y")
 debug = true
-rest_lenght = 1.0
-spring_stiff = 20000.0
+rest_lenght = 0.8
+spring_stiff = 60000.0
 damper_stiff = 4000.0
 tire_grip = 40.0
+tire_len = 0.2
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="FLWheel"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.530508, 0)
+visible = false
 mesh = SubResource("BoxMesh_akq26")
 
+[node name="Wheel" parent="FLWheel" instance=ExtResource("4_ekysg")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.757091, -0.351563, 1.04723)
+
 [node name="RRWheel" type="RayCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8, -0.286997, 1.39389)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8, -0.25, 1.36)
 script = ExtResource("1_mr76y")
 debug = true
-rest_lenght = 1.0
-spring_stiff = 20000.0
+rest_lenght = 0.8
+spring_stiff = 60000.0
 damper_stiff = 4000.0
 traction = true
 tire_grip = 40.0
+tire_len = 0.2
+
+[node name="Wheel" parent="RRWheel" instance=ExtResource("4_ekysg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.75428, -0.36563, -1.16379)
 
 [node name="RLWheel" type="RayCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8, -0.286997, 1.39389)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8, -0.25, 1.36)
 script = ExtResource("1_mr76y")
 debug = true
-rest_lenght = 1.0
-spring_stiff = 20000.0
+rest_lenght = 0.8
+spring_stiff = 60000.0
 damper_stiff = 4000.0
 traction = true
 tire_grip = 40.0
+tire_len = 0.2
+
+[node name="Wheel" parent="RLWheel" instance=ExtResource("4_ekysg")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.766113, -0.368691, 1.04784)
 
 [node name="SteerComponent" parent="." node_paths=PackedStringArray("car", "Fr_wheel", "Fl_wheel") instance=ExtResource("3_q0vlu")]
 car = NodePath("..")

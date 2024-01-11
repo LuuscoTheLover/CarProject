@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=3 uid="uid://v5h5fk4ks8u2"]
 
-[ext_resource type="Texture2D" uid="uid://eftu4ww0xem2" path="res://Resources/Dark/texture_01.png" id="1_0n4qi"]
+[ext_resource type="Texture2D" uid="uid://eftu4ww0xem2" path="res://Resources/Prototype Textures/Dark/texture_01.png" id="1_0n4qi"]
 [ext_resource type="Script" path="res://AssetLib/FreeLookCamera/free_look_camera.gd" id="1_fenvs"]
 [ext_resource type="Script" path="res://Scripts/level.gd" id="1_x40ig"]
 [ext_resource type="PackedScene" uid="uid://bg8td2smeb1so" path="res://Scenes/car.tscn" id="2_j2icv"]
@@ -20,6 +20,8 @@ background_mode = 2
 sky = SubResource("Sky_v6dst")
 reflected_light_source = 2
 tonemap_mode = 2
+ssr_enabled = true
+sdfgi_enabled = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ucnq0"]
 albedo_texture = ExtResource("1_0n4qi")

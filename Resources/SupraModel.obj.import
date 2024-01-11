@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://b5rp23mf4oktb"
+path="res://.godot/imported/SupraModel.obj-b230082b2f4466c701e9f9072655579c.mesh"
+
+[deps]
+
+files=["res://.godot/imported/SupraModel.obj-b230082b2f4466c701e9f9072655579c.mesh"]
+
+source_file="res://Resources/SupraModel.obj"
+dest_files=["res://.godot/imported/SupraModel.obj-b230082b2f4466c701e9f9072655579c.mesh", "res://.godot/imported/SupraModel.obj-b230082b2f4466c701e9f9072655579c.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

@@ -13,11 +13,13 @@ var i = 0
 @export var fr_wheel : bool
 @export var fl_wheel : bool
 @export var traction : bool
+@onready var wheel = $Wheel
 
 var steer_angles : float
 
 @export_category("Tire")
 @export var tire_grip : float
+@export var tire_len : float
 
 @onready var car = $".." as CarScript as RigidBody3D
 
@@ -31,6 +33,7 @@ func _physics_process(delta):
 	var collision_point = get_collision_point()
 	var distance = origin.distance_to(collision_point)
 	var force_point = Vector3(collision_point.x, collision_point.y + wheel_radius, collision_point.z)
+	
 	
 	suspension(distance, force_point)
 	acceleration(force_point)
@@ -94,6 +97,8 @@ func suspension(distance, force_point):
 		var suspension_force = (spring_stiff * offset) - (damper_stiff * vel)
 		car.apply_force(suspension_force * susp_dir, force_point - car.global_position)
 		
+		wheel.position.y = position.y -(tire_len) -(-offset)
+		#print("a")
 		if debug:
 			if traction:
 				DebugDraw3D.draw_sphere(force_point, 0.1)
