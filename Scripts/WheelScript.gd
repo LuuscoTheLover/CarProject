@@ -35,6 +35,7 @@ func _physics_process(delta):
 	var force_point = Vector3(collision_point.x, collision_point.y + wheel_radius, collision_point.z)
 	
 	
+	
 	suspension(distance, force_point)
 	acceleration(force_point)
 	z_force(force_point, delta)
