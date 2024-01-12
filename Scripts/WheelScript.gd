@@ -13,8 +13,9 @@ var i = 0
 @export var fr_wheel : bool
 @export var fl_wheel : bool
 @export var traction : bool
-@onready var wheel = $Wheel
-@export var rotationa : float
+
+
+@onready var wheel = $WheelCenter
 
 var steer_angles : float
 
