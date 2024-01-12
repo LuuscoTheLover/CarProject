@@ -13,7 +13,6 @@ config_version=5
 config/name="Car Project"
 run/main_scene="res://Scenes/level.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
-run/max_fps=45
 config/icon="res://icon.svg"
 
 [debug]
@@ -69,5 +68,4 @@ freecamera={
 
 [physics]
 
-common/physics_ticks_per_second=45
 3d/physics_engine="JoltPhysics3D"

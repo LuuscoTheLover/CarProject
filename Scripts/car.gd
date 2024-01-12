@@ -14,8 +14,8 @@ class_name CarScript
 
 @onready var steer_component = $SteerComponent as SteerComponent
 
-var speedmph
-var speedkmh
+var speedmph : float
+var speedkmh : float
 
 var accel_input : float
 
@@ -23,5 +23,6 @@ func _process(delta):
 	accel_input = Input.get_axis("reverse", "accelerate")
 	steer_component.steering_input = -Input.get_axis("left", "right")
 	
+	print(linear_velocity)
 	speedmph = linear_velocity.length()
 	speedkmh = int(speedmph * 3.6)

@@ -13,3 +13,4 @@ func _process(delta):
 	pivot.rotation.y = lerp_angle(pivot.rotation.y, car.rotation.y, delta * 5.0)
 	look = lerp(look, car.global_position + Vector3(car.linear_velocity.x * direction_offset, car.linear_velocity.y, car.linear_velocity.z) , delta * 5.0)
 	look_at(look)
+	rotation_degrees.x = clamp(rotation_degrees.x, -20, -30)

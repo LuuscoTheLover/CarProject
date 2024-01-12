@@ -14,6 +14,7 @@ var i = 0
 @export var fl_wheel : bool
 @export var traction : bool
 @onready var wheel = $Wheel
+@export var rotationa : float
 
 var steer_angles : float
 
@@ -34,19 +35,25 @@ func _physics_process(delta):
 	var distance = origin.distance_to(collision_point)
 	var force_point = Vector3(collision_point.x, collision_point.y + wheel_radius, collision_point.z)
 	
-	
+
 	
 	suspension(distance, force_point, delta)
 	acceleration(force_point)
 	z_force(force_point, delta)
 	x_force(force_point, delta)
 	steering()
+	wheel_rotation()
 	
 	if Input.is_action_pressed('x'):
 		car.apply_force(global_basis.x * car.engine_power, force_point - car.global_position)
 		
 		
-		
+func wheel_rotation():
+	if car.linear_velocity.dot(basis.z) > 0:
+		wheel.rotation_degrees.x -= car.speedkmh / 3.6
+	else:
+		wheel.rotation_degrees.x += car.speedkmh / 3.6
+
 func steering():
 	rotation_degrees.y = steer_angles
 	
@@ -58,8 +65,8 @@ func x_force(force_point, delta):
 		var force = -vel * tire_grip
 		var xforce = force / delta
 		
-		#print(world_tire_vel)
 		car.apply_force(dir * xforce, force_point - car.global_position)
+		
 		if car.debug:
 			DebugDraw3D.draw_arrow_line(global_position, global_position + (dir * ((xforce / 1000) / 10)), Color.RED, 0.1, true)
 	
@@ -99,14 +106,11 @@ func suspension(distance, force_point,delta):
 		var suspension_force = (spring_stiff * offset) - (damper_stiff * vel)
 		car.apply_force(suspension_force * susp_dir, force_point - car.global_position)
 		
-		#wheel.position.y = position.y -(tire_len) -(-offset)
 		if offset > tire_len:
 			wheel.position.y = position.y -(tire_len)
-		elif traction:
-			wheel.position.y = lerp(wheel.position.y, (position.y -(tire_len) -(-offset)), delta )
 		else:
-			wheel.position.y = (position.y -(tire_len) -(-offset))
-		print(offset)
+			wheel.position.y = (position.y -(tire_len) + (offset))
+			
 		if debug:
 			if traction:
 				DebugDraw3D.draw_sphere(force_point, 0.1)
