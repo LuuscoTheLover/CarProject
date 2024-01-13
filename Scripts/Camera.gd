@@ -14,3 +14,9 @@ func _process(delta):
 	look = lerp(look, car.global_position + Vector3(car.linear_velocity.x * direction_offset, car.linear_velocity.y, car.linear_velocity.z) , delta * 5.0)
 	look_at(look)
 	rotation_degrees.x = clamp(rotation_degrees.x, -20, -30)
+	if car.linear_velocity.dot(basis.z) > 0:
+		pass
+		#rearcam
+	else:
+		pass
+		#frontcam

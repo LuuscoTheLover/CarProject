@@ -2,7 +2,7 @@
 
 [resource]
 resource_name = "Material.049"
-albedo_color = Color(0.721569, 0.32549, 0.309804, 0)
+albedo_color = Color(0.462745, 0.462745, 0.462745, 0)
 roughness = 0.0
 backlight = Color(0.701961, 0.443137, 0, 1)
 refraction_scale = 0.0
