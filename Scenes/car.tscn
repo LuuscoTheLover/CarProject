@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scripts/WheelScript.gd" id="1_mr76y"]
 [ext_resource type="Script" path="res://Scripts/car.gd" id="1_s7myl"]
-[ext_resource type="PackedScene" uid="uid://ch025jfqa6f45" path="res://Resources/Cars models/Supra/SupraModel.tscn" id="2_wun8j"]
+[ext_resource type="PackedScene" uid="uid://qpc2mjacxmvl" path="res://Resources/Cars models/Supra/SupraModel.tscn" id="2_wun8j"]
 [ext_resource type="Script" path="res://Scripts/Camera.gd" id="4_n840w"]
 [ext_resource type="PackedScene" uid="uid://bnfnjxw0rssyj" path="res://Resources/Cars models/Supra/WheelModel.tscn" id="4_pbho6"]
 [ext_resource type="PackedScene" uid="uid://d0kgtryx0fhy2" path="res://Scenes/Components/steer_component.tscn" id="5_ghgvl"]
@@ -24,21 +24,20 @@ turn_radius = 10.8
 rear_track = 1.525
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.956952, 0, 0, 0, 1, 0, -1.55199, 1.32259)
+transform = Transform3D(1, 0, 0, 0, 0.956952, 0, 0, 0, 1, 0, -1.35525, 1.11461)
 shape = SubResource("ConvexPolygonShape3D_jglup")
 
 [node name="SupraModel" parent="." instance=ExtResource("2_wun8j")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.65962, 1.33829)
 
 [node name="FRWheel" type="RayCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8, -0.25, -1.2)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8, -0.0588835, -1.40236)
 script = ExtResource("1_mr76y")
 debug = true
 rest_lenght = 0.8
 spring_stiff = 60000.0
 damper_stiff = 5000.0
 fr_wheel = true
-tire_grip = 25.0
+tire_grip = 40.0
 tire_len = 0.22
 
 [node name="WheelCenter" type="Node3D" parent="FRWheel"]
@@ -48,14 +47,14 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.099
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.102629, 0, 0)
 
 [node name="FLWheel" type="RayCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8, -0.25, -1.2)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8, -0.0588835, -1.40236)
 script = ExtResource("1_mr76y")
 debug = true
 rest_lenght = 0.8
 spring_stiff = 60000.0
 damper_stiff = 5000.0
 fl_wheel = true
-tire_grip = 25.0
+tire_grip = 40.0
 tire_len = 0.22
 
 [node name="WheelCenter" type="Node3D" parent="FLWheel"]
@@ -64,14 +63,14 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, -0.
 [node name="WheelModel" parent="FLWheel/WheelCenter" instance=ExtResource("4_pbho6")]
 
 [node name="RRWheel" type="RayCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8, -0.25, 1.36)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8, -0.0588835, 1.15764)
 script = ExtResource("1_mr76y")
 debug = true
 rest_lenght = 0.8
 spring_stiff = 60000.0
 damper_stiff = 5000.0
 traction = true
-tire_grip = 20.0
+tire_grip = 40.0
 tire_len = 0.22
 
 [node name="WheelCenter" type="Node3D" parent="RRWheel"]
@@ -81,14 +80,14 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.099
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.102629, 0, 0)
 
 [node name="RLWheel" type="RayCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8, -0.25, 1.36)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8, -0.0588835, 1.15764)
 script = ExtResource("1_mr76y")
 debug = true
 rest_lenght = 0.8
 spring_stiff = 60000.0
 damper_stiff = 5000.0
 traction = true
-tire_grip = 20.0
+tire_grip = 40.0
 tire_len = 0.22
 
 [node name="WheelCenter" type="Node3D" parent="RLWheel"]
@@ -105,13 +104,13 @@ Fl_wheel = NodePath("../FLWheel")
 top_level = true
 
 [node name="Camera" type="Camera3D" parent="CameraPivot"]
-transform = Transform3D(1, 0, 0, 0, 0.981627, 0.190809, 0, -0.190809, 0.981627, 0, 2, 5)
+transform = Transform3D(1, 0, 0, 0, 0.990268, 0.139173, 0, -0.139173, 0.990268, 0, 1.5, 4)
 current = true
 script = ExtResource("4_n840w")
-direction_offset = 1.5
+direction_offset = 2.0
 
 [node name="Rear Camera" type="Camera3D" parent="CameraPivot"]
-transform = Transform3D(-1, 1.51808e-08, -8.60946e-08, 0, 0.984808, 0.173648, 8.74228e-08, 0.173648, -0.984808, 0, 2, -5)
+transform = Transform3D(-1, -1.21669e-08, 8.6572e-08, 0, 0.990268, 0.139173, -8.74228e-08, 0.139173, -0.990268, 0, 1.5, -4)
 script = ExtResource("7_y5wcj")
 
 [node name="Speedometer" type="Label3D" parent="."]
