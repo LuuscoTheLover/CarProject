@@ -107,7 +107,7 @@ func suspension(distance, force_point,delta):
 		var suspension_force = (spring_stiff * offset) - (damper_stiff * vel)
 		car.apply_force(suspension_force * susp_dir, force_point - car.global_position)
 		
-		if offset > tire_len:
+		if offset < tire_len:
 			wheel.position.y = position.y -(tire_len)
 		else:
 			wheel.position.y = (position.y -(tire_len) + (offset))
