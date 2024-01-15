@@ -9,7 +9,7 @@ func _ready():
 	look = car.global_position
 
 func _process(delta):
-	if car.linear_velocity.dot(car.basis.z) > 0:
+	if car.rear_gear:
 		$"../Rear Camera".current = true
 	else:
 		current = true
@@ -20,4 +20,4 @@ func _process(delta):
 		look = lerp(look, car.global_position + Vector3(car.linear_velocity.x, car.linear_velocity.y, car.linear_velocity.z), delta * 20)
 		look_at(look)
 		rotation_degrees.x = clamp(rotation_degrees.x, -8, -10)
-		rotation_degrees.y = clamp(rotation_degrees.x, -90, 90)
+		rotation_degrees.y = clamp(rotation_degrees.y, 270, 0)
