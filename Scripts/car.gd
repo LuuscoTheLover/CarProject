@@ -52,14 +52,6 @@ func input_checker():
 	accel_input = Input.get_axis("reverse", "accelerate")
 	steer_component.steering_input = -Input.get_axis("left", "right")
 
-func car_reverse_checker():
-	if linear_velocity.dot(basis.z) > 1:
-		rear_gear = true
-	elif Input.is_action_pressed("reverse"):
-		rear_gear = true
-	else:
-		rear_gear = false
-
 func speed_checker():
 	speedmps = linear_velocity.length()
 	speedkmh = int(speedmps * 3.6)

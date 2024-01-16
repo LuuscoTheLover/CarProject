@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://AssetLib/FreeLookCamera/free_look_camera.gd" id="1_fenvs"]
 [ext_resource type="Script" path="res://Scripts/level.gd" id="1_x40ig"]
-[ext_resource type="PackedScene" uid="uid://bg8td2smeb1so" path="res://Scenes/car.tscn" id="2_j2icv"]
+[ext_resource type="PackedScene" uid="uid://bbsp7axq27qkp" path="res://Scenes/vehiclebodycar.tscn" id="3_ci24c"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ktxbj"]
 sky_top_color = Color(0.360784, 0.596078, 0.909804, 1)
@@ -64,13 +64,11 @@ mesh = SubResource("PlaneMesh_3twdy")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_gqg7y")
 
-[node name="Car" parent="." instance=ExtResource("2_j2icv")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
-
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(-0.305695, 0.379661, -0.87316, 0, 0.91706, 0.398749, 0.952129, 0.121896, -0.280341, -4.73, 3.241, -2.354)
 current = true
 script = ExtResource("1_fenvs")
+follow = true
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4571, -32.7306)
@@ -98,3 +96,6 @@ mesh = SubResource("PrismMesh_2y5qb")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D4/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_g1myl")
+
+[node name="Car" parent="." instance=ExtResource("3_ci24c")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

@@ -1,0 +1,91 @@
+[gd_scene load_steps=7 format=3 uid="uid://bbsp7axq27qkp"]
+
+[ext_resource type="Script" path="res://Scenes/vehiclebodycar.gd" id="1_c3o8e"]
+[ext_resource type="PackedScene" uid="uid://bnfnjxw0rssyj" path="res://Resources/Cars models/Supra/WheelModel.tscn" id="2_gnkmw"]
+[ext_resource type="Script" path="res://Scripts/Camera.gd" id="4_t6vkr"]
+[ext_resource type="Script" path="res://Scripts/Rear Camera.gd" id="5_yk1ht"]
+[ext_resource type="Script" path="res://Scripts/Speedometer.gd" id="6_x2rix"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_udccc"]
+points = PackedVector3Array(-0.350336, -0.198434, -2.29527, 1.00532, -0.279401, 1.4955, -0.945937, -0.496189, 1.56794, -0.295452, 0.515369, 2.07366, 1.00532, -0.351664, -1.82858, 0.64383, 0.515369, -0.166087, -0.945937, 0.0817928, -1.53927, -0.945937, -0.496189, -1.90056, 1.00532, -0.640715, 0.411619, 0.64383, -0.496189, 2.1461, 0.64383, 0.443107, 1.7848, -1.01823, -0.640715, 0.411619, 0.571532, 0.0817928, -1.973, 0.342704, -0.48042, -2.32908, -0.516991, 0.515954, 0.288613, -0.864151, 0.0723618, 1.35712, -0.656744, -0.496189, 2.1461, -0.584446, 0.0817928, -1.973, 0.788426, -0.568452, 1.85679, 0.282537, 0.515369, 2.07366, 0.921121, -0.0596107, -1.61782, 0.921748, 0.00655053, 1.2317, -0.80134, -0.568452, 1.85679, -0.684275, 0.0750811, 1.93935, 0.749536, -0.473211, -2.08733, -1.01823, -0.279401, -1.75614, -0.566834, -0.481878, -2.26603, -0.512442, 0.51112, 0.0953532, -0.0785571, 0.154056, -1.82858, 0.409826, -0.269307, -2.31442, -0.600279, 0.336339, 1.75354, 0.716128, 0.0817928, -1.90056)
+
+[node name="Car" type="VehicleBody3D"]
+mass = 1500.0
+script = ExtResource("1_c3o8e")
+
+[node name="FlWheel" type="VehicleWheel3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.785206, -0.532, 1.422)
+use_as_steering = true
+wheel_radius = 0.33
+wheel_friction_slip = 1.0
+suspension_stiffness = 3000.0
+suspension_max_force = 400.0
+damping_compression = 0.3
+damping_relaxation = 0.5
+
+[node name="WheelModel" parent="FlWheel" instance=ExtResource("2_gnkmw")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="FrWheel" type="VehicleWheel3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.814794, -0.53157, 1.42199)
+use_as_steering = true
+wheel_radius = 0.33
+wheel_friction_slip = 1.0
+suspension_stiffness = 3000.0
+suspension_max_force = 400.0
+damping_compression = 0.3
+damping_relaxation = 0.5
+
+[node name="WheelModel" parent="FrWheel" instance=ExtResource("2_gnkmw")]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, 0, 0, 0)
+
+[node name="RrWheel" type="VehicleWheel3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.814794, -0.53157, -1.13801)
+use_as_traction = true
+wheel_radius = 0.33
+wheel_friction_slip = 1.0
+suspension_stiffness = 3000.0
+suspension_max_force = 400.0
+damping_compression = 0.3
+damping_relaxation = 0.5
+
+[node name="WheelModel" parent="RrWheel" instance=ExtResource("2_gnkmw")]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, 0, 0, 0)
+
+[node name="RlWheel" type="VehicleWheel3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.785206, -0.53157, -1.13801)
+use_as_traction = true
+wheel_radius = 0.33
+wheel_friction_slip = 1.0
+suspension_stiffness = 3000.0
+suspension_max_force = 400.0
+damping_compression = 0.3
+damping_relaxation = 0.5
+
+[node name="WheelModel" parent="RlWheel" instance=ExtResource("2_gnkmw")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="CameraPivot" type="Node3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+top_level = true
+
+[node name="Camera" type="Camera3D" parent="CameraPivot"]
+transform = Transform3D(1, 0, 0, 0, 0.990268, 0.139173, 0, -0.139173, 0.990268, 0, 1.5, 4)
+current = true
+script = ExtResource("4_t6vkr")
+direction_offset = 2.0
+
+[node name="Rear Camera" type="Camera3D" parent="CameraPivot"]
+transform = Transform3D(-1, -1.21669e-08, 8.6572e-08, 0, 0.990268, 0.139173, -8.74228e-08, 0.139173, -0.990268, 0, 1.5, -4)
+current = true
+script = ExtResource("5_yk1ht")
+
+[node name="Speedometer" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.24635, 0, -1.93711)
+billboard = 1
+double_sided = false
+text = "Speed"
+script = ExtResource("6_x2rix")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("ConvexPolygonShape3D_udccc")

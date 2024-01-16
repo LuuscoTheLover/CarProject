@@ -2,7 +2,7 @@ extends Node3D
 class_name SteerComponent
 
 @export_category("Car")
-@export var car : CarScript
+@export var car : RigidBody3D
 @export_category("AcrkermanAngles")
 @export var Fr_wheel : WheelScript
 @export var Fl_wheel : WheelScript
