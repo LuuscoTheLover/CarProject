@@ -5,9 +5,14 @@ class_name CarScript
 
 @export_category("Engine")
 @export var power_curve : Curve
-@export var torque : float
+@export var hp_torque_curve : Curve
 @export var max_hp : float = 200
+@export var torque : float
+@export var idle_rpm : float
+@export var redline : float
 @export var drag : float = 10
+
+var rpm : float
 
 @export_category("Car Specs")
 @export var wheel_base : float
@@ -18,7 +23,6 @@ class_name CarScript
 @export var RRWheel : WheelScript
 @export var RLWheel : WheelScript
 var wheels_rpm : float
-var rpm : float
 
 @export_category("Gears")
 @export var gear_ratio : Array[float]
@@ -37,17 +41,12 @@ func _process(delta):
 	car_reverse_checker()
 	speed_checker()
 	input_checker()
-	wheel_rpm_checker()
+	wheel_rpm_checker(delta)
 	
-func wheel_rpm_checker():
+func wheel_rpm_checker(delta):
 	var speedmpm = speedmps * 60
-	var wheel_dia = PI * (RRWheel.wheel_radius * 2)
-	wheels_rpm = speedmpm / wheel_dia
-	var w_rpm = ((wheels_rpm) * gear_ratio[current_gear])
-	var curve_w_rpm = remap(w_rpm, 0, 1500, 0, 1)
-	var rpm = power_curve.sample_baked(curve_w_rpm)
-	torque = 15000 * (rpm) 
-	print(rpm)
+	var wheel_dia = 2* PI * (RRWheel.wheel_radius)
+	var w_rpm = speedmpm / wheel_dia
 
 func input_checker():
 	accel_input = Input.get_axis("reverse", "accelerate")
