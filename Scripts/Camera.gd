@@ -9,6 +9,11 @@ func _ready():
 	look = car.global_position
 
 func _process(delta):
+	if car.rear_gear:
+		$"../Rear Camera".current = true
+	else:
+		current = true
+
 	if current:
 		pivot.global_position = lerp(pivot.global_position, car.global_position, delta * 20.0)
 		pivot.rotation.y = lerp_angle(pivot.rotation.y, car.rotation.y, delta * direction_offset)
