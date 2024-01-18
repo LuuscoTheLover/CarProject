@@ -20,7 +20,10 @@ var i = 0
 var steer_angles : float
 
 @export_category("Tire")
-@export var tire_grip : float
+@export var tire_mass : float
+@export var grip_factor : float
+@export var steer_curve : Curve
+@export var traction_curve : Curve
 @export var tire_len : float
 
 @onready var car = $".." as CarScript as RigidBody3D
@@ -46,7 +49,9 @@ func _physics_process(delta):
 	wheel_rotation()
 	
 	if Input.is_action_pressed('x'):
-		car.apply_force(global_basis.x * car.engine_power, force_point - car.global_position)
+		car.apply_force(global_basis.x * ($"../SteerComponent".steering_input) * 20000, force_point - car.global_position)
+	if Input.is_action_pressed('z'):
+		car.apply_force(-global_basis.x * car.torque, force_point - car.global_position)
 		
 		
 func wheel_rotation():
@@ -63,13 +68,18 @@ func x_force(force_point, delta):
 		var dir = global_basis.x
 		var world_tire_vel = get_point_velocity(global_position)
 		var vel = dir.dot(world_tire_vel)
-		var force = -vel * tire_grip
+		if traction:
+			grip_factor = traction_curve.sample_baked(vel / world_tire_vel.length())
+		else:
+			grip_factor = steer_curve.sample_baked(vel / world_tire_vel.length())
+		
+		var force = -vel * grip_factor
 		var xforce = force / delta
 		
-		car.apply_force(dir * xforce, force_point - car.global_position)
+		car.apply_force(dir * tire_mass * xforce, force_point - car.global_position)
 		
 		if car.debug:
-			DebugDraw3D.draw_arrow_line(global_position, global_position + (dir * ((xforce / 1000) / 10)), Color.RED, 0.1, true)
+			DebugDraw3D.draw_arrow_line(global_position, global_position + (dir * ((xforce / 100))), Color.RED, 0.1, true)
 	
 func z_force(force_point, delta):
 	if is_colliding():
@@ -93,10 +103,12 @@ func z_force(force_point, delta):
 func acceleration(force_point):
 	if traction and is_colliding():
 		var accel_dir = -global_basis.z
-		var torque = car.accel_input * car.torque
-		car.apply_force(accel_dir * torque, force_point - car.global_position)
+		var car_speed = accel_dir.dot(car.linear_velocity)
+		var normalized_speed = clampi(abs(car_speed / car.max_speed), 0, 1)
+		var avaliable_torque = car.acceleration_curve.sample_baked(normalized_speed) * car.accel_input
+		car.apply_force(accel_dir * avaliable_torque, force_point - car.global_position)
 		if car.debug:
-			DebugDraw3D.draw_arrow_line(force_point, force_point - (accel_dir * ((torque / 1000) / 10)), Color.BLUE, 0.1, true)
+			DebugDraw3D.draw_arrow_line(force_point, force_point - (accel_dir * ((avaliable_torque / 1000) / 10)), Color.BLUE, 0.1, true)
 
 func suspension(distance, force_point,delta):
 	if is_colliding():
@@ -117,7 +129,7 @@ func suspension(distance, force_point,delta):
 			DebugDraw3D.draw_arrow_line(global_position, to_global(position + Vector3(-position.x, ((suspension_force / 1000) / 1.5), -position.z)), Color.GREEN, 0.1, true)
 			DebugDraw3D.draw_line_hit_offset(global_position, Vector3(global_position.x, global_position.y - distance, global_position.z), true, 1, 0.25, Color.RED, Color.RED)
 	else:
-			wheel.position.y = position.y -(wheel_radius)
+			wheel.position.y = position.y -(wheel_radius + 0.05)
 		
 func get_point_velocity(point : Vector3) -> Vector3:
 	return car.linear_velocity + car.angular_velocity.cross(point - car.global_position)

@@ -4,52 +4,59 @@ class_name CarScript
 @export var debug : bool
 
 @export_category("Engine")
-@export var power_curve : Curve
-@export var hp_torque_curve : Curve
-@export var max_hp : float = 200
+@export var horse_power : float
+@export var acceleration_curve : Curve = null
 @export var torque : float
-@export var idle_rpm : float
-@export var redline : float
-@export var drag : float = 10
 
+var max_speed : float
+var wheel_rpm : float
 var rpm : float
+
+@export_category("Gears")
+@export var max_speed_gear : Array[float]
+@export var gear_ratio : Array[float]
+@export var differential_ratio : float
+@export var current_gear : float = 0
+
 
 @export_category("Car Specs")
 @export var wheel_base : float
 @export var turn_radius : float
 @export var rear_track : float
+@export var drag : float = 10
+
 
 @export_category("Wheels RPM")
 @export var RRWheel : WheelScript
 @export var RLWheel : WheelScript
-var wheels_rpm : float
 
-@export_category("Gears")
-@export var gear_ratio : Array[float]
-@export var differential_ratio : float
 
-@export var current_gear : float = 4
+var rear_gear : bool
 
 @onready var steer_component = $SteerComponent as SteerComponent
 
-var rear_gear : bool
 var speedmps : float
 var speedkmh : float
 var accel_input : float
 
 func _process(delta):
+	reset()
 	car_reverse_checker()
 	speed_checker()
 	input_checker()
 	wheel_rpm_checker(delta)
 	
+	max_speed = max_speed_gear[current_gear] / 3.6
+	print(max_speed)
+	print(speedmps)
+	
 func wheel_rpm_checker(delta):
-	var speedmpm = speedmps * 60
-	var wheel_dia = 2* PI * (RRWheel.wheel_radius)
-	var w_rpm = speedmpm / wheel_dia
+	wheel_rpm = ( speedmps * 60) / (2 * PI * (RRWheel.wheel_radius))
+	var w_rpm = wheel_rpm * differential_ratio * gear_ratio[current_gear]
+	
 
 func input_checker():
-	accel_input = Input.get_axis("reverse", "accelerate")
+	accel_input = Input.get_axis("reverse", "accelerate") * (horse_power * 160)
 	steer_component.steering_input = -Input.get_axis("left", "right")
 
 func car_reverse_checker():
@@ -63,3 +70,9 @@ func car_reverse_checker():
 func speed_checker():
 	speedmps = linear_velocity.length()
 	speedkmh = int(speedmps * 3.6)
+
+func reset():
+	if Input.is_action_just_pressed("reset"):
+		global_position.y += 7
+		rotation_degrees = Vector3.ZERO
+		
