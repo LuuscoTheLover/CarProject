@@ -13,6 +13,7 @@ var i = 0
 @export var fr_wheel : bool
 @export var fl_wheel : bool
 @export var traction : bool
+@export_range(0.0, 0.5) var anti_roll_factor : float
 
 
 @onready var wheel = $WheelCenter
@@ -22,8 +23,6 @@ var steer_angles : float
 @export_category("Tire")
 @export var tire_mass : float
 @export var grip_factor : float
-@export var steer_curve : Curve
-@export var traction_curve : Curve
 @export var tire_len : float
 
 @onready var car = $".." as CarScript as RigidBody3D
@@ -37,7 +36,7 @@ func _physics_process(delta):
 	var origin = global_position
 	var collision_point = get_collision_point()
 	var distance = origin.distance_to(collision_point)
-	var force_point = Vector3(collision_point.x, collision_point.y + wheel_radius, collision_point.z)
+	var force_point = Vector3(collision_point.x, (collision_point.y + wheel_radius) + anti_roll_factor, collision_point.z)
 	
 
 	
@@ -49,7 +48,7 @@ func _physics_process(delta):
 	wheel_rotation()
 	
 	if Input.is_action_pressed('x'):
-		car.apply_force(global_basis.x * ($"../SteerComponent".steering_input) * 20000, force_point - car.global_position)
+		car.apply_force(global_basis.x * ($"../SteerComponent".steering_input) * 10000)
 	if Input.is_action_pressed('z'):
 		car.apply_force(-global_basis.x * car.torque, force_point - car.global_position)
 		
@@ -69,10 +68,10 @@ func x_force(force_point, delta):
 		var world_tire_vel = get_point_velocity(global_position)
 		var vel = dir.dot(world_tire_vel)
 		if traction:
-			grip_factor = traction_curve.sample_baked(vel / world_tire_vel.length())
+			grip_factor = car.traction_curve.sample_baked(abs(vel) / world_tire_vel.length())
 		else:
-			grip_factor = steer_curve.sample_baked(vel / world_tire_vel.length())
-		
+			grip_factor = car.steer_curve.sample_baked(abs(vel) / world_tire_vel.length())
+		print(world_tire_vel.length())
 		var force = -vel * grip_factor
 		var xforce = force / delta
 		
