@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bg8td2smeb1so"]
+[gd_scene load_steps=14 format=3 uid="uid://bg8td2smeb1so"]
 
 [ext_resource type="Script" path="res://Scripts/WheelScript.gd" id="1_mr76y"]
 [ext_resource type="Script" path="res://Scripts/car.gd" id="1_s7myl"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://d0kgtryx0fhy2" path="res://Scenes/Components/steer_component.tscn" id="5_ghgvl"]
 [ext_resource type="Script" path="res://Scripts/Speedometer.gd" id="7_8qj70"]
 [ext_resource type="Script" path="res://Scripts/Rear Camera.gd" id="7_y5wcj"]
+[ext_resource type="Script" path="res://Scripts/CarStates.gd" id="9_h1r5f"]
 
 [sub_resource type="Curve" id="Curve_mimih"]
 _data = [Vector2(0, 0.366038), 0.0, 0.0, 0, 0, Vector2(0.56746, 1), 0.0, 0.0, 0, 0, Vector2(0.900794, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -149,3 +150,6 @@ billboard = 1
 double_sided = false
 text = "Speed"
 script = ExtResource("7_8qj70")
+
+[node name="CarStates" type="Node" parent="."]
+script = ExtResource("9_h1r5f")
