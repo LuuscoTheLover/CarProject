@@ -6,7 +6,8 @@ class_name CarScript
 @export_category("Engine")
 @export var horse_power : float
 @export var acceleration_curve : Curve = null
-@export var brake_force : float
+@export var brake_power : float
+var brake_force : float
 
 var max_speed : float
 var wheel_rpm : float
@@ -23,6 +24,7 @@ var rpm : float
 @export var traction_curve : Curve = null
 @export var RRWheel : WheelScript
 @export var RLWheel : WheelScript
+@export var wheels : Array[WheelScript]
 
 @export_category("Car Specs")
 @export var wheel_base : float
@@ -37,19 +39,28 @@ var rear_gear : bool
 
 @onready var steer_component = $SteerComponent as SteerComponent
 
+var driving : bool
+var braking : bool
+var reversing : bool
+
 var speedmps : float
 var speedkmh : float
 var accel_input : float
 var reverse_input : float
 
 func _process(delta):
+	if linear_velocity.dot(basis.z) < -1:
+		driving = true
+	else:
+		driving = false
 	reset()
 	car_reverse_checker()
 	speed_checker()
 	input_checker()
 	wheel_rpm_checker(delta)
-	
+
 	max_speed = max_speed_gear[current_gear] / 3.6
+	brake_force = (mass / drag) + brake_power
 	
 	
 func wheel_rpm_checker(delta):
@@ -59,6 +70,7 @@ func wheel_rpm_checker(delta):
 
 func input_checker():
 	reverse_input = Input.get_action_strength("reverse") * brake_force
+	accel_input = Input.get_action_strength("accelerate") * (horse_power * 200)
 	steer_component.steering_input = -Input.get_axis("left", "right")
 
 func car_reverse_checker():

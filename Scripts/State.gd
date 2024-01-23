@@ -1,6 +1,7 @@
 extends Node
 class_name State
 signal state_trasition
+signal force_state
 
 @export var car : CarScript
 

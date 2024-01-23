@@ -10,6 +10,7 @@ func _ready():
 		if child is State:
 			states[child.name.to_lower()] = child
 			child.state_trasition.connect(change_state)
+			child.force_state.connect(force_state)
 	
 	if initial_state:
 		initial_state.enter()
@@ -31,6 +32,12 @@ func change_state(old_state : State, new_state_name : String):
 	if not new_state:
 		push_error("new state is empty")
 		return
+	current_state.exit()
+	new_state.enter()
+	current_state = new_state
+
+func force_state(old_state : State, new_state_name : String):
+	var new_state = states.get(new_state_name.to_lower())
 	current_state.exit()
 	new_state.enter()
 	current_state = new_state

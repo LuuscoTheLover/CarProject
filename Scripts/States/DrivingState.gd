@@ -1,21 +1,36 @@
 extends State
 class_name DrivingState
 
+var driving_input : float
+
 func enter():
-	print("driving enter")
+	pass
 
 
 func exit():
-	print("driving exit")
+	pass
 	
 
 func state_process(delta):
-	print("drive process")
-	car.accel_input = Input.get_action_strength("accelerate") * (car.horse_power * 200)
+	driving_input = car.accel_input - car.reverse_input
 	
 	if Input.is_action_just_released("accelerate"):
 		state_trasition.emit(self, "IdleState")
+		
+
 
 func state_physics_process(delta):
-	pass
+	acceleration()
+	
+	
 
+func acceleration():
+	for wheel : WheelScript in car.wheels:
+		if wheel.traction and wheel.is_colliding():
+			var accel_dir = -wheel.global_basis.z
+			var car_speed = accel_dir.dot(car.linear_velocity)
+			var normalized_speed = clampi(abs(car_speed / car.max_speed), 0, 1)
+			var avaliable_torque = car.acceleration_curve.sample_baked(normalized_speed) * driving_input
+			car.apply_force(accel_dir * avaliable_torque, wheel.force_point - car.global_position)
+			if car.debug:
+				DebugDraw3D.draw_arrow_line(wheel.force_point, wheel.force_point - (accel_dir * ((avaliable_torque / 1000) / 10)), Color.BLUE, 0.1, true)
