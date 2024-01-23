@@ -14,9 +14,14 @@ func exit():
 func state_process(delta):
 	driving_input = car.accel_input - car.reverse_input
 	
-	if Input.is_action_just_released("accelerate"):
+	if car.grounded < 2:
 		state_trasition.emit(self, "IdleState")
-		
+	
+	#if Input.is_action_just_released("accelerate"):
+		#state_trasition.emit(self, "IdleState")
+	
+	if Input.is_action_pressed("reverse"):
+		state_trasition.emit(self, "BrakingState")
 
 
 func state_physics_process(delta):

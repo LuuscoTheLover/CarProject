@@ -1,6 +1,8 @@
 extends RayCast3D
 class_name WheelScript
 
+@onready var driving_states = $"../Driving States"
+
 @export var debug : bool
 
 @export_category("Suspension")
@@ -16,7 +18,7 @@ class_name WheelScript
 @export_range(0.0, 0.5) var anti_roll_factor : float
 
 var force_point : Vector3
-@onready var wheel = $WheelModel
+@onready var wheel : Node3D
 
 var steer_angles : float
 
@@ -24,10 +26,13 @@ var steer_angles : float
 @export var tire_mass : float
 @export var grip_factor : float
 @export var tire_len : float
+@export var inv_tire_rot : bool
+var grounded : bool
 
 @onready var car = $".." as CarScript as RigidBody3D
 
 func _ready():
+	wheel = get_child(0)
 	target_position.y = -(rest_lenght + wheel_radius)
 	add_exception(car)
 
@@ -37,7 +42,10 @@ func _physics_process(delta):
 	var collision_point = get_collision_point()
 	var distance = origin.distance_to(collision_point)
 	force_point = Vector3(collision_point.x, (collision_point.y + wheel_radius) + anti_roll_factor, collision_point.z)
-	
+	if is_colliding():
+		grounded = true
+	else:
+		grounded = false
 
 	
 	suspension(distance, force_point, delta)
@@ -48,11 +56,17 @@ func _physics_process(delta):
 	
 	
 func wheel_rotation():
-	if car.linear_velocity.dot(basis.z) > 0:
-		wheel.rotation_degrees.x -= car.speedkmh / 3.6
+	if inv_tire_rot:
+		if car.zmotion > 0:
+			wheel.rotation_degrees.x -= car.speedkmh / 3.6
+		elif car.zmotion < 0:
+			wheel.rotation_degrees.x += car.speedkmh / 3.6
 	else:
-		wheel.rotation_degrees.x += car.speedkmh / 3.6
-
+		if car.zmotion > 0:
+			wheel.rotation_degrees.x += car.speedkmh / 3.6
+		elif car.zmotion < 0:
+			wheel.rotation_degrees.x -= car.speedkmh / 3.6
+			
 func steering():
 	rotation_degrees.y = steer_angles
 	
@@ -80,12 +94,12 @@ func z_force(force_point, delta):
 		var vel = dir.dot(world_tire_vel)
 		var zforce = (car.mass / car.drag) * vel
 		
-		if car.speedkmh < 3 and not Input.is_action_pressed("accelerate") and not Input.is_action_pressed("reverse"):
-			car.linear_velocity = Vector3.ZERO
-			car.angular_velocity = Vector3.ZERO
-		elif car.speedkmh < 5 and not Input.is_action_pressed("accelerate") and not Input.is_action_pressed("reverse"):
+		#if car.speedkmh < 3 and driving_states.current_state == IdleState:
+			#car.linear_velocity = Vector3.ZERO
+			#car.angular_velocity = Vector3.ZERO
+		if car.speedkmh < 5:
 			car.linear_velocity = lerp(car.linear_velocity, Vector3.ZERO, delta * 1)
-			car.angular_velocity = lerp(car.angular_velocity, Vector3.ZERO, delta * 1)
+			#car.angular_velocity = lerp(car.angular_velocity, Vector3.ZERO, delta * 1)
 		else:
 			car.apply_force(-dir * zforce, force_point - car.global_position)
 		if car.debug:

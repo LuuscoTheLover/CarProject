@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bnfnjxw0rssyj"]
+[gd_scene load_steps=10 format=3 uid="uid://ccsi8u0qyefyw"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p753w"]
 resource_name = "Material.007"
@@ -221,7 +221,7 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_hjobi")
 
-[node name="Wheel" type="Node3D"]
+[node name="RightWheel" type="Node3D"]
 
 [node name="Wheel" type="MeshInstance3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.031976, -8.53091e-05, 0.000241898)

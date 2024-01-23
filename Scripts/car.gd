@@ -8,6 +8,7 @@ class_name CarScript
 @export var acceleration_curve : Curve = null
 @export var brake_power : float
 var brake_force : float
+var zmotion : float
 
 var max_speed : float
 var wheel_rpm : float
@@ -39,7 +40,7 @@ var rear_gear : bool
 
 @onready var steer_component = $SteerComponent as SteerComponent
 
-var driving : bool
+var grounded : int
 var braking : bool
 var reversing : bool
 
@@ -49,10 +50,7 @@ var accel_input : float
 var reverse_input : float
 
 func _process(delta):
-	if linear_velocity.dot(basis.z) < -1:
-		driving = true
-	else:
-		driving = false
+	zmotion = linear_velocity.dot(basis.z)
 	reset()
 	car_reverse_checker()
 	speed_checker()
@@ -62,6 +60,8 @@ func _process(delta):
 	max_speed = max_speed_gear[current_gear] / 3.6
 	brake_force = (mass / drag) + brake_power
 	
+	grounded = int($FRWheel.grounded) + int($FLWheel.grounded) + int($RRWheel.grounded) + int($RLWheel.grounded)
+	print(grounded)
 	
 func wheel_rpm_checker(delta):
 	wheel_rpm = ( speedmps * 60) / (2 * PI * (RRWheel.wheel_radius))

@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://Scripts/car.gd" id="1_s7myl"]
 [ext_resource type="PackedScene" uid="uid://qpc2mjacxmvl" path="res://Resources/Cars models/Supra/SupraModel.tscn" id="2_wun8j"]
 [ext_resource type="Script" path="res://Scripts/Camera.gd" id="4_n840w"]
-[ext_resource type="PackedScene" uid="uid://bnfnjxw0rssyj" path="res://Resources/Cars models/Supra/WheelModel.tscn" id="4_pbho6"]
+[ext_resource type="PackedScene" uid="uid://bnfnjxw0rssyj" path="res://Resources/Cars models/Supra/LeftWheelModel.tscn" id="4_pbho6"]
 [ext_resource type="PackedScene" uid="uid://d0kgtryx0fhy2" path="res://Scenes/Components/steer_component.tscn" id="5_ghgvl"]
 [ext_resource type="Script" path="res://Scripts/Speedometer.gd" id="7_8qj70"]
 [ext_resource type="Script" path="res://Scripts/Rear Camera.gd" id="7_y5wcj"]
@@ -67,9 +67,10 @@ anti_roll_factor = 0.3
 tire_mass = 75.0
 grip_factor = 0.5
 tire_len = 0.45
+inv_tire_rot = true
 
-[node name="WheelModel" parent="FRWheel" instance=ExtResource("4_pbho6")]
-transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, 0, -0.36, 0)
+[node name="RightWheel" parent="FRWheel" instance=ExtResource("4_pbho6")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, -0.33, 0)
 
 [node name="FLWheel" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8, -0.0769351, -1.40236)
@@ -84,8 +85,8 @@ tire_mass = 75.0
 grip_factor = 0.5
 tire_len = 0.45
 
-[node name="WheelModel" parent="FLWheel" instance=ExtResource("4_pbho6")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, -0.37609, 0)
+[node name="LeftWheel" parent="FLWheel" instance=ExtResource("4_pbho6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.33, 0)
 
 [node name="RRWheel" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8, -0.0769351, 1.15764)
@@ -99,9 +100,10 @@ anti_roll_factor = 0.3
 tire_mass = 75.0
 grip_factor = 0.3
 tire_len = 0.45
+inv_tire_rot = true
 
-[node name="WheelModel" parent="RRWheel" instance=ExtResource("4_pbho6")]
-transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, 0, -0.366, 0)
+[node name="RIghtWheel" parent="RRWheel" instance=ExtResource("4_pbho6")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, -0.33, 0)
 
 [node name="RLWheel" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8, -0.0769351, 1.15764)
@@ -116,8 +118,8 @@ tire_mass = 75.0
 grip_factor = 0.3
 tire_len = 0.45
 
-[node name="WheelModel" parent="RLWheel" instance=ExtResource("4_pbho6")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, -0.408571, 0)
+[node name="LeftWheel" parent="RLWheel" instance=ExtResource("4_pbho6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.33, 0)
 
 [node name="SteerComponent" parent="." node_paths=PackedStringArray("car", "Fr_wheel", "Fl_wheel") instance=ExtResource("5_ghgvl")]
 car = NodePath("..")
@@ -150,8 +152,9 @@ script = ExtResource("7_8qj70")
 script = ExtResource("9_ui5cy")
 initial_state = NodePath("IdleState")
 
-[node name="IdleState" type="Node" parent="Driving States"]
+[node name="IdleState" type="Node" parent="Driving States" node_paths=PackedStringArray("car")]
 script = ExtResource("9_pcc0n")
+car = NodePath("../..")
 
 [node name="DrivingState" type="Node" parent="Driving States" node_paths=PackedStringArray("car")]
 script = ExtResource("11_dc284")
