@@ -9,10 +9,11 @@ func exit():
 	
 
 func state_process(delta):
-	if Input.is_action_just_pressed("1"):
+	print("idleproceess")
+	if Input.is_action_pressed("accelerate"):
 		state_trasition.emit(self, "DrivingState")
-	print("idle process")
-	
+	if Input.is_action_pressed("reverse"):
+		state_trasition.emit(self, "ReverseState")
 
 func state_physics_process(delta):
 	pass
