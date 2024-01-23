@@ -15,6 +15,13 @@ func _ready():
 		initial_state.enter()
 		current_state = initial_state
 
+func _process(delta):
+	if current_state:
+		current_state.state_process(delta)
+		
+func _physics_process(delta):
+	if current_state:
+		current_state.state_physics_process(delta)
 
 func change_state(old_state : State, new_state_name : String):
 	if old_state != current_state:

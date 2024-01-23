@@ -1,9 +1,4 @@
-extends Node
-class_name State
-signal state_trasition
-
-@export var car : CarScript
-
+extends State
 
 func enter():
 	pass
