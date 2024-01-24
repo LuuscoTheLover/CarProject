@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://bg8td2smeb1so"]
+[gd_scene load_steps=19 format=3 uid="uid://bg8td2smeb1so"]
 
 [ext_resource type="Script" path="res://Scripts/WheelScript.gd" id="1_mr76y"]
 [ext_resource type="Script" path="res://Scripts/car.gd" id="1_s7myl"]
@@ -12,6 +12,8 @@
 [ext_resource type="Script" path="res://Scripts/FiniteStateMachine.gd" id="9_ui5cy"]
 [ext_resource type="Script" path="res://Scripts/States/DrivingState.gd" id="11_dc284"]
 [ext_resource type="Script" path="res://Scripts/States/ReverseState.gd" id="12_03hrl"]
+[ext_resource type="Script" path="res://Scripts/States/AirbornState.gd" id="13_qltkm"]
+[ext_resource type="Script" path="res://Scripts/States/ReversingState.gd" id="14_77j4b"]
 
 [sub_resource type="Curve" id="Curve_mimih"]
 _data = [Vector2(0, 0.366038), 0.0, 0.0, 0, 0, Vector2(0.56746, 1), 0.0, 0.0, 0, 0, Vector2(0.900794, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -48,6 +50,7 @@ wheels = [NodePath("FRWheel"), NodePath("FLWheel"), NodePath("RRWheel"), NodePat
 wheel_base = 2.55
 turn_radius = 10.8
 rear_track = 1.525
+drag = 50.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.831601, 0, 0, 0, 1, 0, -1.12436, 1.11461)
@@ -162,4 +165,12 @@ car = NodePath("../..")
 
 [node name="BrakingState" type="Node" parent="Driving States" node_paths=PackedStringArray("car")]
 script = ExtResource("12_03hrl")
+car = NodePath("../..")
+
+[node name="AirBornState" type="Node" parent="Driving States" node_paths=PackedStringArray("car")]
+script = ExtResource("13_qltkm")
+car = NodePath("../..")
+
+[node name="ReversingState" type="Node" parent="Driving States" node_paths=PackedStringArray("car")]
+script = ExtResource("14_77j4b")
 car = NodePath("../..")

@@ -70,7 +70,7 @@ func wheel_rpm_checker(delta):
 
 func input_checker():
 	reverse_input = Input.get_action_strength("reverse") * brake_force
-	accel_input = Input.get_action_strength("accelerate") * (horse_power * 200)
+	accel_input = Input.get_action_strength("accelerate") * (horse_power * 100)
 	steer_component.steering_input = -Input.get_axis("left", "right")
 
 func car_reverse_checker():

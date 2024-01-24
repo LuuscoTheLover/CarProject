@@ -94,12 +94,8 @@ func z_force(force_point, delta):
 		var vel = dir.dot(world_tire_vel)
 		var zforce = (car.mass / car.drag) * vel
 		
-		#if car.speedkmh < 3 and driving_states.current_state == IdleState:
-			#car.linear_velocity = Vector3.ZERO
-			#car.angular_velocity = Vector3.ZERO
 		if car.speedkmh < 5:
 			car.linear_velocity = lerp(car.linear_velocity, Vector3.ZERO, delta * 1)
-			#car.angular_velocity = lerp(car.angular_velocity, Vector3.ZERO, delta * 1)
 		else:
 			car.apply_force(-dir * zforce, force_point - car.global_position)
 		if car.debug:
