@@ -94,10 +94,10 @@ func z_force(force_point, delta):
 		var vel = dir.dot(world_tire_vel)
 		var zforce = (car.mass / car.drag) * vel
 		
-		if car.speedkmh < 5:
-			car.linear_velocity = lerp(car.linear_velocity, Vector3.ZERO, delta * 1)
-		else:
-			car.apply_force(-dir * zforce, force_point - car.global_position)
+		#if car.speedkmh < 5:
+			#car.linear_velocity = lerp(car.linear_velocity, Vector3(car.linear_velocity.x, car.linear_velocity.y, 0.0), delta * 1)
+		#else:
+		car.apply_force(-dir * zforce, force_point - car.global_position)
 		if car.debug:
 			DebugDraw3D.draw_arrow_line(force_point, force_point + (-dir * ((zforce / 1000) / 2)), Color.BLUE_VIOLET, 0.1, true)
 		

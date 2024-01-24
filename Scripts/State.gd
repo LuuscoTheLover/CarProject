@@ -4,7 +4,7 @@ signal state_trasition
 signal force_state
 
 @export var car : CarScript
-
+@onready var fsm : FiniteStateMachine = $"../"
 
 func enter():
 	pass

@@ -12,7 +12,7 @@ func exit():
 	
 
 func state_process(delta):
-	driving_input = car.accel_input - car.reverse_input
+	driving_input = car.accel_input - car.brake_input
 	
 	if car.grounded < 2:
 		state_trasition.emit(self, "IdleState")

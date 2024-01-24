@@ -40,4 +40,4 @@ func braking():
 			else:
 				can_brake = false
 			if can_brake:
-				car.apply_force(car.reverse_input * brakedir, wheel.force_point - car.global_position)
+				car.apply_force(car.brake_input * brakedir, wheel.force_point - car.global_position)

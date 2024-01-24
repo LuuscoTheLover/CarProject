@@ -16,6 +16,7 @@ var rpm : float
 
 @export_category("Gears")
 @export var max_speed_gear : Array[float]
+@export var max_speed_reverse : float
 @export var gear_ratio : Array[float]
 @export var differential_ratio : float
 @export var current_gear : float = 0
@@ -48,6 +49,7 @@ var speedmps : float
 var speedkmh : float
 var accel_input : float
 var reverse_input : float
+var brake_input : float
 
 func _process(delta):
 	zmotion = linear_velocity.dot(basis.z)
@@ -69,8 +71,9 @@ func wheel_rpm_checker(delta):
 	
 
 func input_checker():
-	reverse_input = Input.get_action_strength("reverse") * brake_force
+	brake_input = Input.get_action_strength("reverse") * brake_force
 	accel_input = Input.get_action_strength("accelerate") * (horse_power * 100)
+	reverse_input = Input.get_action_strength("reverse") * (horse_power * 100)
 	steer_component.steering_input = -Input.get_axis("left", "right")
 
 func car_reverse_checker():

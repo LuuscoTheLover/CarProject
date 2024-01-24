@@ -24,9 +24,9 @@ func _physics_process(delta):
 	if current_state:
 		current_state.state_physics_process(delta)
 
-func change_state(old_state : State, new_state_name : String):
-	if old_state != current_state:
-		push_error("old state is: %s, and current state is: %s" % [old_state.name, current_state.name])
+func change_state(changing_state : State, new_state_name : String):
+	if changing_state != current_state:
+		push_error("changing_state is: %s, and current state is: %s, and new_state is: %s" % [changing_state.name, current_state.name, new_state_name])
 		return
 	var new_state = states.get(new_state_name.to_lower())
 	if not new_state:
