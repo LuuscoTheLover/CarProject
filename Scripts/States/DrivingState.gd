@@ -14,7 +14,7 @@ func exit():
 func state_process(delta):
 	driving_input = car.accel_input - car.brake_input
 	
-	if car.grounded < 2:
+	if car.grounded < 3:
 		state_trasition.emit(self, "IdleState")
 	
 	if car.zmotion > -1 and not Input.is_action_pressed("accelerate"):
