@@ -30,7 +30,7 @@ point_count = 4
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_jglup"]
 points = PackedVector3Array(-0.349287, 1.26223, -3.41826, 0.867361, 1.46766, 0.394422, -0.872726, 0.892047, 0.66185, -0.366771, 1.97622, 0.878745, 1.00628, 1.10891, -2.952, 0.496072, 1.96735, -1.09194, 0.78936, 0.892047, 0.733847, -0.945034, 0.964333, -3.024, -0.571051, 1.90556, -1.2173, 1.00628, 0.81976, -0.639065, 0.572437, 1.54238, -3.09645, -0.844358, 1.59543, 0.00847666, -0.728111, 1.54238, -3.024, 0.355712, 1.97622, 0.950741, 0.618251, 0.98347, -3.36652, -1.01754, 0.81976, -0.639065, -0.655803, 0.964333, 1.02319, -1.01754, 1.18131, -2.87956, 0.644744, 0.964333, 1.02319, 0.887201, 1.46597, -2.55609, 1.00628, 0.892047, -2.15688, 1.00628, 1.25348, 0.30051, -0.438861, 1.96041, -1.15602, -0.873888, 1.46749, 0.386027, -0.354292, 0.980566, -3.45032, 0.838887, 1.59651, 0.0817905, -0.890261, 1.46568, -2.5438, -0.439078, 1.61479, -2.87956, 0.411147, 1.19115, -3.44025, 0.717052, 1.54238, -3.024, -0.515001, 1.97569, -0.771465, 0.680572, 1.39987, 0.910093)
 
-[node name="Car" type="RigidBody3D" node_paths=PackedStringArray("RRWheel", "RLWheel", "wheels")]
+[node name="Car" type="RigidBody3D" node_paths=PackedStringArray("wheels")]
 mass = 1500.0
 center_of_mass_mode = 1
 script = ExtResource("1_s7myl")
@@ -45,8 +45,6 @@ differential_ratio = 3.266
 current_gear = 5.0
 steer_curve = SubResource("Curve_spuy3")
 traction_curve = SubResource("Curve_0jffp")
-RRWheel = NodePath("RRWheel")
-RLWheel = NodePath("RLWheel")
 wheels = [NodePath("FRWheel"), NodePath("FLWheel"), NodePath("RRWheel"), NodePath("RLWheel")]
 wheel_base = 2.55
 turn_radius = 10.8
@@ -145,13 +143,6 @@ follow = true
 transform = Transform3D(-1, -1.21669e-08, 8.6572e-08, 0, 0.990268, 0.139173, -8.74228e-08, 0.139173, -0.990268, 0, 1.5, -4)
 script = ExtResource("7_y5wcj")
 
-[node name="Speedometer" type="Label3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.40042, 0, 2.09465)
-billboard = 1
-double_sided = false
-text = "Speed"
-script = ExtResource("7_8qj70")
-
 [node name="Driving States" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("9_ui5cy")
 initial_state = NodePath("IdleState")
@@ -175,3 +166,10 @@ car = NodePath("../..")
 [node name="ReversingState" type="Node" parent="Driving States" node_paths=PackedStringArray("car")]
 script = ExtResource("14_77j4b")
 car = NodePath("../..")
+
+[node name="Speedometer" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.40042, 0, 2.09465)
+billboard = 1
+double_sided = false
+text = "Speed"
+script = ExtResource("7_8qj70")

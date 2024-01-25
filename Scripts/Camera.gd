@@ -11,15 +11,9 @@ func _ready():
 
 func _process(delta):
 	if follow:
-		if car.rear_gear:
-			$"../Rear Camera".current = true
-		else:
-			current = true
-
-		if current:
-			pivot.global_position = lerp(pivot.global_position, car.global_position, delta * 20.0)
-			pivot.rotation.y = lerp_angle(pivot.rotation.y, car.rotation.y, delta * direction_offset)
-			look = lerp(look, car.global_position + Vector3(car.linear_velocity.x, car.linear_velocity.y, car.linear_velocity.z), delta * 20)
-			look_at(look)
-			rotation_degrees.x = clamp(rotation_degrees.x, -8, -10)
-			rotation_degrees.y = clamp(rotation_degrees.y, 270, 0)
+		pivot.global_position = lerp(pivot.global_position, car.global_position, delta * 20.0)
+		pivot.rotation.y = lerp_angle(pivot.rotation.y, car.rotation.y, delta * direction_offset)
+		look = lerp(look, car.global_position + Vector3(car.linear_velocity.x, car.linear_velocity.y, car.linear_velocity.z), delta * 20)
+		look_at(look)
+		rotation_degrees.x = clamp(rotation_degrees.x, -8, -10)
+		rotation_degrees.y = clamp(rotation_degrees.y, 270, 0)
