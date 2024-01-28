@@ -32,20 +32,15 @@ var grounded : bool
 @onready var car = $".." as CarScript as RigidBody3D
 
 func _ready():
+	add_exception(car)
 	wheel = get_child(0)
 	target_position.y = -(rest_lenght + wheel_radius)
-	add_exception(car)
 
 
 func _physics_process(delta):
-	var origin = global_position
-	var collision_point = get_collision_point()
-	var distance = origin.distance_to(collision_point)
-	force_point = Vector3(collision_point.x, (collision_point.y + wheel_radius) + anti_roll_factor, collision_point.z)
-	if is_colliding():
-		grounded = true
-	else:
-		grounded = false
+	var distance = global_position.distance_to(get_collision_point())
+	force_point = Vector3(get_collision_point().x, (get_collision_point().y + wheel_radius) + anti_roll_factor, get_collision_point().z)
+	grounded = is_colliding()
 
 	
 	suspension(distance, force_point, delta)
@@ -57,16 +52,10 @@ func _physics_process(delta):
 	
 func wheel_rotation():
 	if inv_tire_rot:
-		if car.zmotion > 0:
-			wheel.rotation_degrees.x -= car.speedkmh / 3.6
-		elif car.zmotion < 0:
-			wheel.rotation_degrees.x += car.speedkmh / 3.6
+		wheel.rotation_degrees.x -= car.zmotion
 	else:
-		if car.zmotion > 0:
-			wheel.rotation_degrees.x += car.speedkmh / 3.6
-		elif car.zmotion < 0:
-			wheel.rotation_degrees.x -= car.speedkmh / 3.6
-			
+		wheel.rotation_degrees.x += car.zmotion
+		
 func steering():
 	rotation_degrees.y = steer_angles
 	
