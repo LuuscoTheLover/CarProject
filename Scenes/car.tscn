@@ -34,7 +34,6 @@ points = PackedVector3Array(-0.349287, 1.26223, -3.41826, 0.867361, 1.46766, 0.3
 mass = 1500.0
 center_of_mass_mode = 1
 script = ExtResource("1_s7myl")
-debug = true
 horse_power = 325.0
 acceleration_curve = SubResource("Curve_mimih")
 brake_power = 10000.0
