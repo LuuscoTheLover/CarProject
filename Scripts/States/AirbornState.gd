@@ -12,9 +12,6 @@ func exit():
 func state_process(delta):
 	if car.grounded:
 		state_trasition.emit(self, "IdleState")
-	else:
-		pass
-	
 
 func state_physics_process(delta):
 	pass

@@ -1,31 +1,34 @@
-[gd_scene load_steps=19 format=3 uid="uid://bg8td2smeb1so"]
+[gd_scene load_steps=22 format=3 uid="uid://bg8td2smeb1so"]
 
 [ext_resource type="Script" path="res://Scripts/WheelScript.gd" id="1_mr76y"]
 [ext_resource type="Script" path="res://Scripts/car.gd" id="1_s7myl"]
 [ext_resource type="PackedScene" uid="uid://qpc2mjacxmvl" path="res://Resources/Cars models/Supra/SupraModel.tscn" id="2_wun8j"]
 [ext_resource type="Script" path="res://Scripts/Camera.gd" id="4_n840w"]
 [ext_resource type="PackedScene" uid="uid://bnfnjxw0rssyj" path="res://Resources/Cars models/Supra/LeftWheelModel.tscn" id="4_pbho6"]
-[ext_resource type="PackedScene" uid="uid://d0kgtryx0fhy2" path="res://Scenes/Components/steer_component.tscn" id="5_ghgvl"]
 [ext_resource type="Script" path="res://Scripts/Speedometer.gd" id="7_8qj70"]
+[ext_resource type="Script" path="res://Scripts/SteerComponent.gd" id="7_u4q0f"]
 [ext_resource type="Script" path="res://Scripts/Rear Camera.gd" id="7_y5wcj"]
 [ext_resource type="Script" path="res://Scripts/States/IdleState.gd" id="9_pcc0n"]
 [ext_resource type="Script" path="res://Scripts/FiniteStateMachine.gd" id="9_ui5cy"]
 [ext_resource type="Script" path="res://Scripts/States/DrivingState.gd" id="11_dc284"]
 [ext_resource type="Script" path="res://Scripts/States/BrakingState.gd" id="12_03hrl"]
 [ext_resource type="Script" path="res://Scripts/States/AirbornState.gd" id="13_qltkm"]
+[ext_resource type="Script" path="res://Scripts/States/HandBrakeState.gd" id="14_64gbl"]
 [ext_resource type="Script" path="res://Scripts/States/ReversingState.gd" id="14_77j4b"]
+[ext_resource type="Script" path="res://Scripts/ManualGearStates/GearStateMachine.gd" id="15_d7100"]
+[ext_resource type="Script" path="res://Scripts/ManualGearStates/ManualGearState.gd" id="16_uoukn"]
 
 [sub_resource type="Curve" id="Curve_mimih"]
 _data = [Vector2(0, 0.366038), 0.0, 0.0, 0, 0, Vector2(0.56746, 1), 0.0, 0.0, 0, 0, Vector2(0.900794, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 4
 
-[sub_resource type="Curve" id="Curve_spuy3"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.479042, 0.802198), -0.786499, -0.786499, 0, 0, Vector2(0.766467, 0.340659), 0.0, 0.0, 0, 0, Vector2(1, 0.318681), 0.0, 0.0, 0, 0]
-point_count = 4
+[sub_resource type="Curve" id="Curve_iujbx"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.748503, 0.791209), 0.0, 0.0, 0, 0, Vector2(1, 0.450549), 0.0, 0.0, 0, 0]
+point_count = 3
 
-[sub_resource type="Curve" id="Curve_0jffp"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.556886, 0.406593), -1.53917, -1.53917, 0, 0, Vector2(0.838323, 0.252747), 0.0, 0.0, 0, 0, Vector2(1, 0.21978), 0.0591988, 0.0, 0, 0]
-point_count = 4
+[sub_resource type="Curve" id="Curve_vrnpw"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.60479, 0.538461), 0.0, 0.0, 0, 0, Vector2(1, 0.230769), 0.0, 0.0, 0, 0]
+point_count = 3
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_jglup"]
 points = PackedVector3Array(-0.349287, 1.26223, -3.41826, 0.867361, 1.46766, 0.394422, -0.872726, 0.892047, 0.66185, -0.366771, 1.97622, 0.878745, 1.00628, 1.10891, -2.952, 0.496072, 1.96735, -1.09194, 0.78936, 0.892047, 0.733847, -0.945034, 0.964333, -3.024, -0.571051, 1.90556, -1.2173, 1.00628, 0.81976, -0.639065, 0.572437, 1.54238, -3.09645, -0.844358, 1.59543, 0.00847666, -0.728111, 1.54238, -3.024, 0.355712, 1.97622, 0.950741, 0.618251, 0.98347, -3.36652, -1.01754, 0.81976, -0.639065, -0.655803, 0.964333, 1.02319, -1.01754, 1.18131, -2.87956, 0.644744, 0.964333, 1.02319, 0.887201, 1.46597, -2.55609, 1.00628, 0.892047, -2.15688, 1.00628, 1.25348, 0.30051, -0.438861, 1.96041, -1.15602, -0.873888, 1.46749, 0.386027, -0.354292, 0.980566, -3.45032, 0.838887, 1.59651, 0.0817905, -0.890261, 1.46568, -2.5438, -0.439078, 1.61479, -2.87956, 0.411147, 1.19115, -3.44025, 0.717052, 1.54238, -3.024, -0.515001, 1.97569, -0.771465, 0.680572, 1.39987, 0.910093)
@@ -37,13 +40,13 @@ script = ExtResource("1_s7myl")
 horse_power = 325.0
 acceleration_curve = SubResource("Curve_mimih")
 brake_power = 10000.0
+hand_brake_power = 10000.0
 max_speed_gear = Array[float]([80.0, 120.0, 150.0, 180.0, 210.0, 250.0])
 max_speed_reverse = 50.0
 gear_ratio = Array[float]([3.8, 2.3, 1.6, 1.3, 1.0, 0.7])
 differential_ratio = 3.266
-current_gear = 5.0
-steer_curve = SubResource("Curve_spuy3")
-traction_curve = SubResource("Curve_0jffp")
+steer_curve = SubResource("Curve_iujbx")
+traction_curve = SubResource("Curve_vrnpw")
 wheels = [NodePath("FRWheel"), NodePath("FLWheel"), NodePath("RRWheel"), NodePath("RLWheel")]
 wheel_base = 2.55
 turn_radius = 10.8
@@ -122,11 +125,6 @@ tire_len = 0.45
 [node name="LeftWheel" parent="RLWheel" instance=ExtResource("4_pbho6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.33, 0)
 
-[node name="SteerComponent" parent="." node_paths=PackedStringArray("car", "Fr_wheel", "Fl_wheel") instance=ExtResource("5_ghgvl")]
-car = NodePath("..")
-Fr_wheel = NodePath("../FRWheel")
-Fl_wheel = NodePath("../FLWheel")
-
 [node name="CameraPivot" type="Node3D" parent="."]
 top_level = true
 
@@ -141,6 +139,12 @@ follow = true
 [node name="Rear Camera" type="Camera3D" parent="CameraPivot"]
 transform = Transform3D(-1, -1.21669e-08, 8.6572e-08, 0, 0.990268, 0.139173, -8.74228e-08, 0.139173, -0.990268, 0, 1.5, -4)
 script = ExtResource("7_y5wcj")
+
+[node name="SteerComponent" type="Node" parent="." node_paths=PackedStringArray("car", "Fr_wheel", "Fl_wheel")]
+script = ExtResource("7_u4q0f")
+car = NodePath("..")
+Fr_wheel = NodePath("../FRWheel")
+Fl_wheel = NodePath("../FLWheel")
 
 [node name="Driving States" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("9_ui5cy")
@@ -166,9 +170,21 @@ car = NodePath("../..")
 script = ExtResource("14_77j4b")
 car = NodePath("../..")
 
+[node name="HandBrakeState" type="Node" parent="Driving States" node_paths=PackedStringArray("car")]
+script = ExtResource("14_64gbl")
+car = NodePath("../..")
+
 [node name="Speedometer" type="Label3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.40042, 0, 2.09465)
 billboard = 1
 double_sided = false
 text = "Speed"
 script = ExtResource("7_8qj70")
+
+[node name="GearStateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("15_d7100")
+initial_state = NodePath("ManualGearState")
+
+[node name="ManualGearState" type="Node" parent="GearStateMachine" node_paths=PackedStringArray("car")]
+script = ExtResource("16_uoukn")
+car = NodePath("../..")

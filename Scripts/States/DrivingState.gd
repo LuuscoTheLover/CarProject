@@ -12,7 +12,7 @@ func exit():
 	
 
 func state_process(delta):
-	driving_input = car.accel_input - car.brake_input
+	driving_input = car.accel_input - car.brake_input - car.hand_brake_input
 	
 	if not car.grounded:
 		state_trasition.emit(self, "IdleState")
@@ -22,6 +22,9 @@ func state_process(delta):
 	
 	if Input.is_action_pressed("reverse"):
 		state_trasition.emit(self, "BrakingState")
+		
+	if Input.is_action_pressed("handbrake"):
+		state_trasition.emit(self, "HandBrakeState")
 
 
 func state_physics_process(delta):
@@ -33,8 +36,7 @@ func acceleration():
 	for wheel : WheelScript in car.wheels:
 		if wheel.traction and wheel.is_colliding():
 			var accel_dir = -wheel.global_basis.z
-			var car_speed = accel_dir.dot(car.linear_velocity)
-			var normalized_speed = clampi(abs(car_speed / car.max_speed), 0, 1)
+			var normalized_speed = clampi(abs(car.zmotion / car.max_speed), 0, 1)
 			var avaliable_torque = car.acceleration_curve.sample_baked(normalized_speed) * driving_input
 			car.apply_force(accel_dir * avaliable_torque, wheel.force_point - car.global_position)
 			if car.debug:

@@ -7,6 +7,7 @@ class_name CarScript
 @export var horse_power : float
 @export var acceleration_curve : Curve = null
 @export var brake_power : float
+@export var hand_brake_power : float
 
 var zmotion : float
 
@@ -15,8 +16,10 @@ var zmotion : float
 @export var max_speed_reverse : float
 @export var gear_ratio : Array[float]
 @export var differential_ratio : float
-@export var current_gear : float = 0
+@export_range(0, 1) var change_perc : float = 0.8
 
+var change_gear_rpm : float
+var current_gear : float = 0
 var max_speed : float
 
 @export_category("Wheels")
@@ -46,8 +49,10 @@ var current_state : String
 var accel_input : float
 var reverse_input : float
 var brake_input : float
+var hand_brake_input : float
 
 func _process(delta):
+	change_gear_rpm = ((max_speed * 60) / (2 * PI * (wheels[3].wheel_radius))) * change_perc
 	wheel_on_ground = int($FRWheel.grounded) + int($FLWheel.grounded) + int($RRWheel.grounded) + int($RLWheel.grounded)
 	grounded = false
 	if wheel_on_ground >= 3:
@@ -60,7 +65,8 @@ func _process(delta):
 	
 	
 func input_checker():
-	brake_input = Input.get_action_strength("reverse") * ((mass / drag) + brake_power)
+	brake_input = Input.get_action_strength("reverse")* ((mass / drag) + brake_power)
+	hand_brake_input = Input.get_action_strength("handbrake")* ((mass / drag) + hand_brake_power)
 	accel_input = Input.get_action_strength("accelerate") * (horse_power * 100)
 	reverse_input = Input.get_action_strength("reverse") * (horse_power * 100)
 	steering_input = -Input.get_axis("left", "right")
@@ -71,9 +77,10 @@ func input_checker():
 	if Input.is_action_just_pressed("reset"):
 		global_position.y += 7
 		rotation_degrees = Vector3.ZERO
+		angular_velocity = Vector3.ZERO
 	
 func wheel_rpm():
-	var wheels_rpm = (( speedmps * 60) / (2 * PI * ($RRWheel.wheel_radius))) * differential_ratio * gear_ratio[current_gear]
+	var wheels_rpm = (( speedmps * 60) / (2 * PI * ($RRWheel.wheel_radius)))
 	return wheels_rpm
 	
 func speed_checker():
