@@ -13,7 +13,7 @@ func exit():
 	
 
 func state_process(delta):
-	if car.grounded < 3:
+	if not car.grounded:
 		state_trasition.emit(self, "AirBornState")
 	else:
 		if Input.is_action_pressed("accelerate"):

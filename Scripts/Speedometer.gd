@@ -9,5 +9,4 @@ func _ready():
 
 
 func _process(delta):
-	
-	text = "%s KM/H \n %s" % [str(car.speedkmh), $"../Driving States".current_state.name]
+	text = "%s KM/H \n %s" % [str(car.speedkmh), car.current_state]

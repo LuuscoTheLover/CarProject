@@ -10,7 +10,7 @@ func exit():
 	
 
 func state_process(delta):
-	if car.grounded >= 3:
+	if car.grounded:
 		state_trasition.emit(self, "IdleState")
 	else:
 		pass

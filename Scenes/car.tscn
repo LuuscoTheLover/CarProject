@@ -11,7 +11,7 @@
 [ext_resource type="Script" path="res://Scripts/States/IdleState.gd" id="9_pcc0n"]
 [ext_resource type="Script" path="res://Scripts/FiniteStateMachine.gd" id="9_ui5cy"]
 [ext_resource type="Script" path="res://Scripts/States/DrivingState.gd" id="11_dc284"]
-[ext_resource type="Script" path="res://Scripts/States/ReverseState.gd" id="12_03hrl"]
+[ext_resource type="Script" path="res://Scripts/States/BrakingState.gd" id="12_03hrl"]
 [ext_resource type="Script" path="res://Scripts/States/AirbornState.gd" id="13_qltkm"]
 [ext_resource type="Script" path="res://Scripts/States/ReversingState.gd" id="14_77j4b"]
 

@@ -24,6 +24,7 @@ var max_speed : float
 @export var traction_curve : Curve = null
 @export var wheels : Array[WheelScript]
 
+var steering_input : float
 @onready var steer_component = $SteerComponent as SteerComponent
 
 @export_category("Car Specs")
@@ -33,20 +34,27 @@ var max_speed : float
 @export var drag : float = 10
 
 
-
-var grounded : int
+var wheel_on_ground : int
+var grounded : bool
 
 var speedmps : float
 var speedkmh : float
+
+var current_state : String
+@onready var fsm : FiniteStateMachine = $"Driving States"
 
 var accel_input : float
 var reverse_input : float
 var brake_input : float
 
 func _process(delta):
-	grounded = int($FRWheel.grounded) + int($FLWheel.grounded) + int($RRWheel.grounded) + int($RLWheel.grounded)
+	wheel_on_ground = int($FRWheel.grounded) + int($FLWheel.grounded) + int($RRWheel.grounded) + int($RLWheel.grounded)
+	grounded = false
+	if wheel_on_ground >= 3:
+		grounded = true
 	zmotion = linear_velocity.dot(basis.z)
 	max_speed = max_speed_gear[current_gear] / 3.6
+	current_state = fsm.current_state.name
 	speed_checker()
 	input_checker()
 	
@@ -55,7 +63,7 @@ func input_checker():
 	brake_input = Input.get_action_strength("reverse") * ((mass / drag) + brake_power)
 	accel_input = Input.get_action_strength("accelerate") * (horse_power * 100)
 	reverse_input = Input.get_action_strength("reverse") * (horse_power * 100)
-	steer_component.steering_input = -Input.get_axis("left", "right")
+	steering_input = -Input.get_axis("left", "right")
 	
 	if Input.is_action_just_pressed("quit"):
 		get_tree().quit()
