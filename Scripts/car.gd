@@ -52,7 +52,7 @@ var brake_input : float
 var hand_brake_input : float
 
 func _process(delta):
-	change_gear_rpm = ((max_speed * 60) / (2 * PI * (wheels[3].wheel_radius))) * change_perc
+	change_gear_rpm = ((max_speed * 60) / (2 * PI * (wheels[3].wheel_radius)))
 	wheel_on_ground = int($FRWheel.grounded) + int($FLWheel.grounded) + int($RRWheel.grounded) + int($RLWheel.grounded)
 	grounded = false
 	if wheel_on_ground >= 3:
