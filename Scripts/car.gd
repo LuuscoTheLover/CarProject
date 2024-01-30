@@ -12,11 +12,11 @@ class_name CarScript
 var zmotion : float
 
 @export_category("Gears")
+@export var manual_drive : bool = false
 @export var max_speed_gear : Array[float]
 @export var max_speed_reverse : float
 @export var gear_ratio : Array[float]
 @export var differential_ratio : float
-@export_range(0, 1) var change_perc : float = 0.8
 
 var change_gear_rpm : float
 var current_gear : float = 0
