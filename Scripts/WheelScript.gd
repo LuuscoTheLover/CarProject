@@ -3,8 +3,6 @@ class_name WheelScript
 
 @onready var driving_states = $"../Driving States"
 
-@export var debug : bool
-
 @export_category("Suspension")
 @export var rest_lenght : float
 @export var spring_stiff : float
@@ -69,6 +67,7 @@ func grip_force(force_point, delta):
 	if traction:
 		grip_factor = car.traction_curve.sample_baked(abs(vel) / world_tire_vel.length())
 	var lateral_force = ( -vel * grip_factor)/ delta
+	print(abs(vel) / world_tire_vel.length())
 	car.apply_force(dir * tire_mass * lateral_force, force_point - car.global_position)
 	if car.debug:
 		DebugDraw3D.draw_arrow_line(global_position, global_position + (dir * ((lateral_force / 100))), Color.RED, 0.1, true)
