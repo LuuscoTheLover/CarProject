@@ -23,8 +23,8 @@ var current_gear : float = 0
 var max_speed : float
 
 @export_category("Wheels")
-@export var steer_curve : Curve = null
-@export var traction_curve : Curve = null
+@export var steer_grip : float
+@export var traction_grip : float
 @export var wheels : Array[WheelScript]
 
 var steering_input : float

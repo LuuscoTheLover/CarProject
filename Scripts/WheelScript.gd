@@ -63,11 +63,10 @@ func wheel_rotation():
 func grip_force(force_point, delta):
 	var dir = global_basis.x
 	var vel = dir.dot(world_tire_vel)
-	grip_factor = car.steer_curve.sample_baked(abs(vel) / world_tire_vel.length())
+	grip_factor = car.steer_grip
 	if traction:
-		grip_factor = car.traction_curve.sample_baked(abs(vel) / world_tire_vel.length())
+		grip_factor = car.traction_grip
 	var lateral_force = ( -vel * grip_factor)/ delta
-	print(abs(vel) / world_tire_vel.length())
 	car.apply_force(dir * tire_mass * lateral_force, force_point - car.global_position)
 	if car.debug:
 		DebugDraw3D.draw_arrow_line(global_position, global_position + (dir * ((lateral_force / 100))), Color.RED, 0.1, true)
