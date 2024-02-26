@@ -1,8 +1,7 @@
-[gd_scene load_steps=15 format=3 uid="uid://v5h5fk4ks8u2"]
+[gd_scene load_steps=14 format=3 uid="uid://v5h5fk4ks8u2"]
 
 [ext_resource type="Script" path="res://AssetLib/FreeLookCamera/free_look_camera.gd" id="1_fenvs"]
-[ext_resource type="Script" path="res://Scripts/level.gd" id="1_x40ig"]
-[ext_resource type="PackedScene" uid="uid://bg8td2smeb1so" path="res://Scenes/car.tscn" id="2_j2icv"]
+[ext_resource type="PackedScene" uid="uid://den21bwntt4gf" path="res://Scenes/supra.tscn" id="2_hj677"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ktxbj"]
 sky_top_color = Color(0.360784, 0.596078, 0.909804, 1)
@@ -46,7 +45,6 @@ data = PackedVector3Array(5, 3, 5, 5, -3, 5, -5, -3, 5, 5, 3, -5, -5, -3, -5, 5,
 data = PackedVector3Array(5, 3, 5, 5, -3, 5, -5, -3, 5, 5, 3, -5, -5, -3, -5, 5, -3, -5, 5, 3, 5, 5, 3, -5, 5, -3, 5, 5, 3, -5, 5, -3, -5, 5, -3, 5, 5, 3, -5, 5, 3, 5, -5, -3, -5, 5, 3, 5, -5, -3, 5, -5, -3, -5, -5, -3, 5, 5, -3, 5, -5, -3, -5, 5, -3, 5, 5, -3, -5, -5, -3, -5)
 
 [node name="Level" type="Node3D"]
-script = ExtResource("1_x40ig")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-2.69631e-08, -0.863519, 0.504316, -3.44046e-08, 0.504316, 0.863519, -1, 5.93233e-09, -4.3307e-08, 1.67563, 7.42903, 0.512213)
@@ -63,9 +61,6 @@ mesh = SubResource("PlaneMesh_3twdy")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_pxogu")
-
-[node name="Car" parent="." instance=ExtResource("2_j2icv")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(-0.305695, 0.379661, -0.87316, 0, 0.91706, 0.398749, 0.952129, 0.121896, -0.280341, -4.73, 3.241, -2.354)
@@ -98,3 +93,6 @@ mesh = SubResource("PrismMesh_2y5qb")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D4/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_g1myl")
+
+[node name="Supra" parent="." instance=ExtResource("2_hj677")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.881999, 0)

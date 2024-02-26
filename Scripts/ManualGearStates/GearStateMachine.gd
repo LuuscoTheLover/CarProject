@@ -1,3 +1,0 @@
-extends FiniteStateMachine
-class_name GearStateMachine
-

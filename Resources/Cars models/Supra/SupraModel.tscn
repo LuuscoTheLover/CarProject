@@ -303,36 +303,36 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_2ratb")
 
-[node name="SupraModel" type="Node3D"]
-
-[node name="Car body" type="MeshInstance3D" parent="."]
+[node name="Car body" type="MeshInstance3D"]
 mesh = SubResource("ArrayMesh_ej2o6")
 skeleton = NodePath("")
 
-[node name="Car Floor" type="MeshInstance3D" parent="Car body"]
+[node name="Car Floor" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.26839e-05, -0.447169, -0.104196)
 mesh = SubResource("ArrayMesh_vsi10")
 skeleton = NodePath("")
 
-[node name="Sides Back" type="MeshInstance3D" parent="Car body"]
+[node name="Sides Back" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.0656285, 0, 0, 0, 0.022901, 0.0615032, 0, -0.0615032, 0.022901, 0.00649503, -0.32688, 0.650693)
 mesh = SubResource("ArrayMesh_0p62f")
 skeleton = NodePath("")
 
-[node name="Escape" type="MeshInstance3D" parent="Car body"]
+[node name="Escape" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.409474, -0.489967, 1.62902)
 mesh = SubResource("ArrayMesh_40gc1")
 skeleton = NodePath("")
 
-[node name="Escape Cilinder" type="MeshInstance3D" parent="Car body"]
+[node name="Escape Cilinder" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0.55446, -0.444919, 2.03687)
 mesh = SubResource("ArrayMesh_72if8")
 skeleton = NodePath("")
 
-[node name="Front Bumper" type="Node3D" parent="Car body"]
+[node name="Front Bumper" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0016335, -0.490815, -2.1366)
 
-[node name="Glass" type="MeshInstance3D" parent="Car body"]
+[node name="Glass" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000574242, 0.329885, 0.269047)
 mesh = SubResource("ArrayMesh_2uabk")
 skeleton = NodePath("")
+
+[node name="SupraModel" type="Node3D" parent="."]
